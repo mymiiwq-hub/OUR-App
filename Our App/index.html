@@ -1,0 +1,3210 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fffafc">
+<title>OUR - Shared Life App</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="OUR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Athiti:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #f4a7c1;
+  --pink-soft: #fff0f5;
+  --pink-dark: #d9799c;
+  --yellow: #f7d66b;
+  --yellow-soft: #fff9df;
+  --green: #9ed6b4;
+  --green-soft: #edf9f1;
+  --green-dark: #58a775;
+  --ink: #33333a;
+  --muted: #8c8c96;
+  --line: #eeeaf0;
+  --bg: #fffafc;
+  --card: #ffffff;
+  --danger: #e98d8d;
+  --danger-soft: #fdeaea;
+  --radius: 20px;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: linear-gradient(180deg, #f5f2f0 0%, #f2f3ee 45%, #f2f4ef 100%); color: var(--ink); font-family: 'Quicksand', 'Athiti', -apple-system, BlinkMacSystemFont, "Segoe UI", "Prompt", sans-serif; font-weight: 300; display: flex; justify-content: center; letter-spacing: 0.1px; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; border: 0; background: none; }
+.app { width: 100%; max-width: 520px; min-height: 100vh; background: var(--bg); position: relative; display: flex; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.06); }
+header { position: sticky; top: 0; background: rgba(255, 250, 252, 0.92); backdrop-filter: blur(12px); padding: 16px 18px 10px; display: flex; justify-content: space-between; align-items: center; z-index: 20; border-bottom: 1px solid var(--line); box-shadow: 0 3px 0 -1px rgba(0,0,0,0); }
+header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: linear-gradient(90deg, var(--pink) 0%, var(--pink) 60%, var(--yellow) 60%, var(--yellow) 75%, var(--green) 75%, var(--green) 100%); opacity: 0.6; }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 24px; letter-spacing: 3px; color: var(--ink); text-decoration: none; }
+.brand-mark { width: 30px; height: 30px; border: 2px solid var(--pink); border-radius: 10px; display: grid; place-items: center; color: var(--pink); font-size: 16px; line-height: 1; transform: rotate(-6deg); background: #fff; }
+.group-btn { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 650; color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.04); display: flex; align-items: center; gap: 6px; transition: transform 0.1s; }
+.group-btn:active { transform: scale(0.96); }
+main { flex: 1; padding: 14px 18px 120px; }
+.page { display: none; animation: fadeIn 0.2s ease-in-out; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
+h1 { font-size: 26px; font-weight: 600; margin: 8px 0 4px; color: var(--ink); }
+.sub { color: var(--muted); font-size: 13.5px; margin-bottom: 16px; }
+.sub-tabs { display: flex; background: #f1edef; padding: 4px; border-radius: 16px; margin-bottom: 16px; gap: 4px; }
+.sub-tab { flex: 1; padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; transition: all 0.2s; }
+.sub-tab.active { background: #fff; color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.section-title { display: flex; justify-content: space-between; align-items: center; margin: 22px 2px 10px; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
+.section-title span { font-size: 12px; color: var(--muted); font-weight: 500; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 15px; margin-bottom: 12px; box-shadow: var(--shadow); }
+.empty-hint { color: var(--muted); font-size: 12.5px; text-align: center; padding: 14px 8px; }
+.row { display: flex; gap: 12px; align-items: center; }
+.grow { flex: 1; }
+.icon { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; font-size: 20px; line-height: 1; flex-shrink: 0; }
+.pink { background: var(--pink-soft); color: var(--pink-dark); }
+.yellow { background: var(--yellow-soft); }
+.green { background: var(--green-soft); color: var(--green-dark); }
+.danger { background: var(--danger-soft); color: var(--danger); }
+.badge { font-size: 11px; padding: 4px 9px; border-radius: 999px; background: #f5f3f5; color: #777; font-weight: 600; }
+.badge.pink-bg { background: var(--pink-soft); color: var(--pink-dark); }
+.badge.green-bg { background: var(--green-soft); color: var(--green-dark); }
+.badge.danger-bg { background: var(--danger-soft); color: var(--danger); }
+.badge.yellow-bg { background: var(--yellow-soft); color: #8a6d1a; }
+.quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.quick button { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px 6px; color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.quick button:active { transform: scale(0.95); }
+.quick button span { font-size: 22px; line-height: 1; }
+.quick button span.icon { margin-bottom: 2px; }
+.quick button b { font-size: 11px; font-weight: 650; }
+.post-box { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.post-box textarea { width: 100%; border: none; background: #faf8fa; border-radius: 14px; padding: 12px; font-size: 14px; resize: none; outline: none; margin-bottom: 10px; }
+.post-actions { display: flex; justify-content: space-between; align-items: center; }
+.post-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.avatar { width: 38px; height: 38px; border-radius: 14px; background: var(--pink-soft); display: grid; place-items: center; font-size: 18px; line-height: 1; flex-shrink:0; }
+.post-meta { flex:1; }
+.post-meta b { font-size: 14px; display: block; }
+.post-meta small { color: var(--muted); font-size: 11px; }
+.post-body { font-size: 14px; line-height: 1.5; margin-bottom: 12px; color: #444; white-space:pre-wrap; }
+.post-footer { display: flex; gap: 16px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; align-items:center; }
+.reply-item { background: #fbf9fa; padding: 8px 12px; border-radius: 12px; font-size: 12px; margin-top: 6px; }
+.reply-box { display:flex; gap:6px; margin-top:8px; }
+.reply-box input { flex:1; padding:8px 12px; font-size:12.5px; }
+.reply-box button { background:var(--pink); color:#fff; padding:8px 12px; border-radius:12px; font-size:12px; font-weight:700; }
+.pin-card { background: var(--yellow-soft); border: 1px solid #f0e2a8; border-radius: var(--radius); padding: 13px; margin-bottom: 12px; }
+.icon-btn { background:#f2eef2; border-radius:50%; width:30px; height:30px; min-width:30px; display:inline-flex; align-items:center; justify-content:center; font-size:14px; line-height:1; padding:0; color:#777; flex-shrink:0; }
+.todo { display: flex; gap: 12px; align-items: flex-start; }
+.check { width: 24px; height: 24px; border: 2px solid #d8d4d8; border-radius: 8px; background: white; display: grid; place-items: center; font-size: 13px; line-height: 1; color: white; margin-top: 2px; flex-shrink: 0; transition: all 0.2s; }
+.done .check { background: var(--green); border-color: var(--green); }
+.done .title { text-decoration: line-through; color: var(--muted); }
+.expense-split { background: #fbf9fa; border-radius: 14px; padding: 10px; margin-top: 10px; font-size: 12px; }
+.split-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items:center; }
+.categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
+.cat-pill { padding: 8px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 12.5px; font-weight: 600; white-space: nowrap; color: var(--muted); flex-shrink:0; }
+.cat-pill.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+.memory-preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.memory-preview-item { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #faf8fa; }
+.memory-preview-item img, .memory-preview-item video { width: 100%; height: 100%; object-fit: cover; }
+.memory-preview-item .rm-btn { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; background: rgba(30,26,30,0.65); color: #fff; font-size: 12px; line-height: 1; display: grid; place-items: center; }
+.memory-view-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.memory-view-grid img, .memory-view-grid video { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px; }
+.memory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.memory-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.memory-thumb { width: 100%; height: 140px; background: var(--pink-soft); display: grid; place-items: center; font-size: 40px; line-height: 1; overflow: hidden; position: relative; cursor: pointer; }
+.memory-count-badge { position: absolute; top: 8px; right: 8px; background: rgba(30,26,30,0.6); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; line-height: 1.3; backdrop-filter: blur(2px); }
+.memory-thumb img, .memory-thumb video { width: 100%; height: 100%; object-fit: cover; }
+.memory-info { padding: 10px; }
+.memory-date { font-size: 11px; color: var(--pink-dark); font-weight: 700; }
+.memory-caption { font-size: 12.5px; margin-top: 4px; font-weight: 600; }
+.mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.mood { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 12px 2px; font-size: 26px; line-height: 1; text-align: center; transition: transform 0.15s, border-color 0.15s; }
+.mood:active, .mood.selected { transform: scale(1.08); border-color: var(--pink); background: var(--pink-soft); }
+.mood small { display: block; font-size: 9px; color: #777; margin-top: 4px; font-weight: 600; }
+.bottom { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: min(520px, 100%); height: 72px; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(6, 1fr); z-index: 30; padding-bottom: env(safe-area-inset-bottom); }
+.nav { background: none; color: #9c9ca6; font-size: 10px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: color 0.15s; }
+.nav .ni { font-size: 20px; line-height: 1; transition: transform 0.15s; }
+.nav.active { color: var(--pink-dark); font-weight: 600; }
+.nav.active .ni { transform: translateY(-2px); }
+.modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.38); backdrop-filter: blur(4px); z-index: 50; align-items: flex-end; }
+.modal.show { display: flex; animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes slideUp { from { transform: translateY(100%);} to { transform: translateY(0);} }
+.sheet { width: min(520px, 100%); margin: auto; background: #fff; border-radius: 26px 26px 0 0; padding: 22px 20px 34px; max-height: 88vh; overflow-y: auto; }
+.sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.sheet h2 { margin: 0; font-size: 20px; font-weight: 600; }
+.close { background: #f2eef2; border-radius: 50%; width: 32px; height: 32px; font-size: 18px; line-height: 1; color: #666; display: grid; place-items: center; }
+.option-btn { width: 100%; text-align: left; background: #faf8fa; border: 1px solid var(--line); padding: 14px; border-radius: 16px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-weight: 650; }
+label { font-size: 12px; font-weight: 700; color: #777; display: block; margin-top: 10px; }
+input, textarea, select { width: 100%; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; background: #fff; outline: none; margin-top: 4px; font-size: 14px; }
+input:focus, textarea:focus, select:focus { border-color: var(--pink); }
+.primary { background: var(--pink); color: white; width: 100%; padding: 14px; border-radius: 16px; font-weight: 600; font-size: 15px; margin-top: 16px; box-shadow: 0 4px 14px rgba(244, 167, 193, 0.4); }
+.primary:active { transform: scale(0.98); }
+.primary.small{ padding:9px; font-size:12.5px; margin-top:8px; }
+.toast { position: fixed; left: 50%; bottom: 86px; transform: translateX(-50%) translateY(20px); background: #2d2d33; color: #fff; padding: 11px 18px; border-radius: 999px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); z-index: 60; box-shadow: 0 6px 20px rgba(0,0,0,0.15); max-width:88%; text-align:center; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.profile-card { display: flex; gap: 16px; align-items: center; }
+.profile-avatar { width: 72px; height: 72px; border-radius: 22px; background: var(--pink-soft); display: grid; place-items: center; font-size: 34px; line-height: 1; border: 2px solid var(--pink); }
+.muted { color: var(--muted); font-size: 13px; }
+.bold { font-weight: 600; }
+/* new */
+.cal-nav{display:flex; align-items:center; justify-content:space-between; padding:10px 4px; font-weight:600; }
+.cal-nav button{ width:34px; height:34px; border-radius:12px; background:#fff; border:1px solid var(--line); font-size:15px; color:var(--pink-dark); }
+.cal-dow-row{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px;}
+.cal-dow{font-size:10px; color:var(--muted); text-align:center; font-weight:700;}
+.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
+.cal-cell{aspect-ratio:1; border-radius:10px; background:#fff; border:1px solid var(--line); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:12px; position:relative; color:var(--ink);}
+.cal-cell.blank{background:transparent; border:none;}
+.cal-cell.today{border-color:var(--pink); background:var(--pink-soft); font-weight:600;}
+.cal-cell.selected{border-color:var(--pink-dark); box-shadow:0 0 0 2px var(--pink-dark) inset;}
+.cal-dots{position:absolute; bottom:4px; left:50%; transform:translateX(-50%); display:flex; gap:3px;}
+.cal-dot{width:5px; height:5px; border-radius:50%; background:var(--pink-dark);}
+.cal-dot.imp{background:var(--yellow);}
+.mood-dot{font-size:9px; position:absolute; bottom:1px;}
+.chip-select{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
+.chip{padding:6px 12px; border-radius:999px; border:1px solid var(--line); background:#fff; font-size:12px; font-weight:600; color:var(--muted);}
+.chip.active{background:var(--pink); color:#fff; border-color:var(--pink);}
+.leader-row{display:flex; justify-content:space-between; align-items:center; padding:9px 4px; border-bottom:1px solid var(--line); font-size:13.5px;}
+.leader-row:last-child{border-bottom:none;}
+.rank{width:22px; height:22px; border-radius:50%; background:#f5f3f5; display:inline-grid; place-items:center; font-size:11px; line-height:1; font-weight:600; margin-right:8px;}
+.back-btn{display:flex; align-items:center; gap:6px; font-weight:700; font-size:13px; color:var(--pink-dark); margin-bottom:8px;}
+.link-row{display:flex; gap:8px; margin-top:12px;}
+.link-row button{flex:1; padding:10px; text-align:center; justify-content:center;}
+.emoji-pick{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+.emoji-pick button{width:42px; height:42px; border-radius:12px; border:1px solid var(--line); background:#fff; font-size:20px;}
+.emoji-pick button.active{border-color:var(--pink); background:var(--pink-soft);}
+.row-actions{display:flex; gap:6px; flex-shrink:0;}
+.login-screen{position:fixed; inset:0; background:linear-gradient(160deg, var(--pink-soft) 0%, var(--yellow-soft) 50%, var(--green-soft) 100%); z-index:100; display:flex; align-items:center; justify-content:center; padding:24px;}
+.login-card{width:100%; max-width:380px; background:#fff; border-radius:28px; padding:32px 26px; box-shadow:0 20px 50px rgba(0,0,0,0.12); text-align:center;}
+.login-logo{width:64px; height:64px; border:2.5px solid var(--pink); border-radius:20px; display:grid; place-items:center; color:var(--pink); font-size:30px; line-height:1; margin:0 auto 14px; transform:rotate(-6deg); background:#fff;}
+.login-card h1{font-size:28px; letter-spacing:3px; margin:0 0 4px; font-weight:600;}
+.login-card .sub{margin-bottom:22px; text-align:center;}
+.login-card label{text-align:left}
+body.logged-out .app{display:none;}
+body:not(.logged-out) #loginScreen{display:none;}
+.confirm-actions{display:flex; gap:10px; margin-top:6px;}
+.confirm-actions button{flex:1; margin:0; justify-content:center; text-align:center;}
+/* ---- login/signup tabs ---- */
+.auth-tabs{display:flex; background:#f1edef; padding:4px; border-radius:16px; margin-bottom:18px; gap:4px;}
+.auth-tab{flex:1; padding:10px; border-radius:12px; font-size:13.5px; font-weight:600; color:var(--muted); text-align:center; transition:all 0.2s;}
+.auth-tab.active{background:#fff; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.auth-pane{display:none;}
+.auth-pane.active{display:block;}
+.auth-error{font-size:12px; color:var(--danger); text-align:left; margin:6px 0 -4px; min-height:14px;}
+.demo-toggle{margin-top:16px; font-size:11.5px; color:var(--muted); font-weight:650; text-decoration:underline; text-align:center;}
+.demo-box{display:none; text-align:left; margin-top:10px;}
+.demo-box.show{display:block;}
+.demo-hint{font-size:11px; color:var(--muted); margin-bottom:6px;}
+/* ---- login account picker (demo/testing only) ---- */
+.account-pick{display:flex; flex-direction:column; gap:8px; margin:6px 0 4px; max-height:220px; overflow-y:auto;}
+.account-item{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1.5px solid var(--line); border-radius:16px; background:#fff; text-align:left; transition:all .15s;}
+.account-item .avatar{width:36px; height:36px; font-size:16px;}
+.account-item .grow{flex:1; min-width:0;}
+.account-item b{display:block; font-size:13.5px;}
+.account-item small{color:var(--muted); font-size:11.5px; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.account-item .check-mark{width:20px; height:20px; border-radius:50%; border:2px solid var(--line); flex-shrink:0; display:grid; place-items:center; font-size:11px; line-height:1; color:#fff;}
+.account-item.active{border-color:var(--pink); background:var(--pink-soft);}
+.account-item.active .check-mark{background:var(--pink); border-color:var(--pink);}
+/* ---- no-group onboarding screen ---- */
+.onboard-screen{position:fixed; inset:0; background:linear-gradient(160deg, var(--pink-soft) 0%, var(--yellow-soft) 50%, var(--green-soft) 100%); z-index:99; display:none; align-items:center; justify-content:center; padding:24px;}
+.onboard-screen.show{display:flex;}
+.onboard-card{width:100%; max-width:380px; background:#fff; border-radius:28px; padding:30px 26px; box-shadow:0 20px 50px rgba(0,0,0,0.12); text-align:center;}
+.onboard-choice{width:100%; display:flex; align-items:center; gap:12px; padding:16px; border:1.5px solid var(--line); border-radius:18px; background:#fff; margin-top:12px; text-align:left; transition:all .15s;}
+.onboard-choice:active{transform:scale(0.98); background:var(--pink-soft);}
+.onboard-choice span.oc-icon{font-size:24px;}
+.onboard-choice b{display:block; font-size:14.5px;}
+.onboard-choice small{color:var(--muted); font-size:12px;}
+/* ---- toggle switch ---- */
+.toggle-row{display:flex; align-items:center; justify-content:space-between; padding:12px 4px; }
+.toggle-row .toggle-label{display:flex; flex-direction:column;}
+.toggle-row .toggle-label b{font-size:13.5px;}
+.toggle-row .toggle-state{font-size:11.5px; font-weight:700; margin-top:2px;}
+.toggle-state.on{color:var(--green-dark);}
+.toggle-state.off{color:var(--muted);}
+.switch{width:46px; height:26px; border-radius:999px; background:#e2dee2; position:relative; flex-shrink:0; transition:background .2s; padding:0; border:none;}
+.switch::after{content:''; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.25); transition:left .2s;}
+.switch.on{background:var(--green);}
+.switch.on::after{left:23px;}
+/* ---- profile photo upload ---- */
+.profile-photo-wrap{position:relative; width:72px; height:72px; flex-shrink:0;}
+.profile-avatar{overflow:hidden;}
+.profile-avatar img{width:100%; height:100%; object-fit:cover; border-radius:20px;}
+.photo-edit-btn{position:absolute; bottom:-4px; right:-4px; width:26px; height:26px; border-radius:50%; background:var(--pink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.15);}
+/* ---- redeem points modal ---- */
+.points-select{display:flex; align-items:center; gap:10px; margin:10px 0;}
+.points-select input[type=range]{flex:1; margin:0;}
+.points-select .points-val{width:64px; text-align:center; font-weight:600; font-size:16px; color:var(--pink-dark); flex-shrink:0;}
+.points-avail{font-size:12px; color:var(--muted); margin-top:-6px; margin-bottom:10px;}
+/* ---- qr code ---- */
+.qr-box{display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:12px; padding:16px; background:#faf8fa; border-radius:16px;}
+.qr-box img, .qr-box svg{width:180px; height:180px; border-radius:10px; background:#fff; padding:8px; border:1px solid var(--line); display:block;}
+.qr-box .link-text{font-size:11px; color:var(--muted); word-break:break-all; text-align:center;}
+</style>
+</head>
+<body class="logged-out">
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">♡</div>
+    <h1>OUR</h1>
+    <div class="sub" id="authSub">แอปเดียว แชร์ชีวิตด้วยกัน</div>
+
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
+      <button type="button" class="auth-tab" id="authTabSignup" onclick="switchAuthTab('signup')">สมัครสมาชิก</button>
+    </div>
+
+    <!-- LOGIN PANE -->
+    <div class="auth-pane active" id="authPaneLogin">
+      <label>อีเมล</label>
+      <input id="loginEmail" type="email" placeholder="you@example.com">
+      <label>รหัสผ่าน</label>
+      <input id="loginPassword" type="password" placeholder="••••••••">
+      <div class="auth-error" id="loginError"></div>
+      <button class="primary" onclick="handleLoginSubmit()">เข้าสู่ระบบ</button>
+    </div>
+
+    <!-- SIGNUP PANE -->
+    <div class="auth-pane" id="authPaneSignup">
+      <label>ชื่อที่ใช้แสดง</label>
+      <input id="signupName" placeholder="เช่น มิ้ว">
+      <label>อีเมล</label>
+      <input id="signupEmail" type="email" placeholder="you@example.com">
+      <label>รหัสผ่าน</label>
+      <input id="signupPassword" type="password" placeholder="อย่างน้อย 6 ตัวอักษร">
+      <label>เลือกอิโมจิประจำตัว</label>
+      <div class="emoji-pick" id="signupEmojiPick">
+        <button type="button" class="active" onclick="pickSignupEmoji(this,'🙂')">🙂</button>
+        <button type="button" onclick="pickSignupEmoji(this,'🌷')">🌷</button>
+        <button type="button" onclick="pickSignupEmoji(this,'🐰')">🐰</button>
+        <button type="button" onclick="pickSignupEmoji(this,'👦')">👦</button>
+        <button type="button" onclick="pickSignupEmoji(this,'🐱')">🐱</button>
+        <button type="button" onclick="pickSignupEmoji(this,'🦊')">🦊</button>
+      </div>
+      <div class="auth-error" id="signupError"></div>
+      <button class="primary" onclick="handleSignupSubmit()">สร้างบัญชี</button>
+    </div>
+
+    <div class="demo-toggle" onclick="toggleDemoAccounts()" id="demoToggleLabel">ใช้บัญชีตัวอย่างเพื่อทดลองระบบ</div>
+    <div class="demo-box" id="demoBox">
+      <div class="demo-hint">สำหรับทดลองใช้งานเท่านั้น เลือกบัญชีแล้วกด "เข้าสู่ระบบด้วยบัญชีนี้"</div>
+      <div class="account-pick" id="accountPick"></div>
+      <button class="option-btn" style="text-align:center; justify-content:center; margin-top:4px" onclick="handleDemoLogin()">เข้าสู่ระบบด้วยบัญชีนี้</button>
+    </div>
+  </div>
+</div>
+
+<div id="onboardScreen" class="onboard-screen">
+  <div class="onboard-card">
+    <div class="login-logo">♡</div>
+    <h1 style="font-size:22px">ยินดีต้อนรับ</h1>
+    <div class="sub" id="onboardGreeting">คุณยังไม่มีกลุ่ม เริ่มต้นใช้งานโดย</div>
+    <button type="button" class="onboard-choice" onclick="showOnboardCreate()">
+      <span class="oc-icon">➕</span>
+      <span><b>สร้างกลุ่มใหม่</b><small>ตั้งกลุ่มของคุณเองตั้งแต่ต้น</small></span>
+    </button>
+    <button type="button" class="onboard-choice" onclick="showOnboardJoin()">
+      <span class="oc-icon">🔑</span>
+      <span><b>ใส่รหัสคำเชิญ</b><small>เข้าร่วมกลุ่มที่มีอยู่แล้วด้วยรหัส</small></span>
+    </button>
+
+    <div id="onboardCreateBox" style="display:none; margin-top:16px; text-align:left">
+      <label>ชื่อ Group</label>
+      <input id="onboardGroupName" placeholder="เช่น ทีมงาน, เพื่อนมัธยม">
+      <label>เลือกไอคอน Group</label>
+      <div class="emoji-pick" id="onboardEmojiPick">
+        <button class="active" onclick="pickGroupEmoji(this,'💕')">💕</button>
+        <button onclick="pickGroupEmoji(this,'🫶')">🫶</button>
+        <button onclick="pickGroupEmoji(this,'👨‍👩‍👧‍👦')">👨‍👩‍👧‍👦</button>
+        <button onclick="pickGroupEmoji(this,'🎓')">🎓</button>
+        <button onclick="pickGroupEmoji(this,'⚽')">⚽</button>
+        <button onclick="pickGroupEmoji(this,'💼')">💼</button>
+      </div>
+      <button class="primary" onclick="submitOnboardCreateGroup()">สร้าง Group</button>
+    </div>
+
+    <div id="onboardJoinBox" style="display:none; margin-top:16px; text-align:left">
+      <label>รหัสคำเชิญ (Invite Code)</label>
+      <input id="onboardInviteCode" placeholder="เช่น OUR-AB12CD" style="text-transform:uppercase">
+      <button class="primary" onclick="submitOnboardJoinGroup()">เข้าร่วมกลุ่ม</button>
+    </div>
+  </div>
+</div>
+<div class="app">
+  <header>
+    <button class="brand" onclick="showPage('home')">
+      <span class="brand-mark">♡</span>
+      <span>OUR</span>
+    </button>
+    <button class="group-btn" onclick="openGroupModal()">
+      <span id="groupBadge">💕</span>
+      <span id="groupName">OURS</span> ⌄
+    </button>
+  </header>
+
+  <main>
+    <!-- PAGE 1: HOME -->
+    <section id="home" class="page active">
+      <h1>Hi, <span id="greetingName">มิ้ว</span> 👋</h1>
+      <div class="sub">วันนี้ใน <b id="homeGroupText">OURS</b> มีอะไรบ้าง</div>
+
+      <div class="section-title">QUICK ADD <span>สร้างด่วน</span></div>
+      <div class="quick">
+        <button onclick="openModal('quickAddModal')"><span class="icon pink">➕</span><b>สร้างใหม่</b></button>
+        <button onclick="showPage('moodcal')"><span class="icon green">😊</span><b>Mood</b></button>
+        <button onclick="showWishlistPage()"><span class="icon pink">✨</span><b>Wishlist</b></button>
+        <button onclick="showAwardPage()"><span class="icon yellow">🏆</span><b>Award</b></button>
+      </div>
+
+      <div id="pinnedWrap"></div>
+
+      <div class="section-title">GROUP FEED <span>ฟีดของพวกเรา</span></div>
+      <div class="post-box">
+        <textarea id="postInput" rows="2" placeholder="วันนี้มีอะไรอยากแชร์ให้เพื่อนๆ ในกลุ่มบ้าง..."></textarea>
+        <div class="post-actions">
+          <select id="postPrivacy" style="width:auto; margin:0; padding:6px 10px; font-size:12px;">
+            <option value="group">👥 Group</option>
+            <option value="private">🔒 ส่วนตัว</option>
+          </select>
+          <button class="primary" style="margin:0; width:auto; padding:8px 18px; font-size:13px" onclick="addPost()">โพสต์</button>
+        </div>
+      </div>
+      <div id="feedList"></div>
+
+      <div class="section-title">TODAY <span id="todayDateLabel">วันนี้</span></div>
+      <div id="todayList"></div>
+
+      <div class="section-title">UPCOMING <span>เร็วๆ นี้</span></div>
+      <div id="upcomingList"></div>
+
+      <div class="section-title">NEED ATTENTION <span>ต้องจัดการ</span></div>
+      <div id="attentionList"></div>
+
+      <div class="section-title">RECENT <span>กิจกรรมล่าสุด</span></div>
+      <div id="recentList"></div>
+    </section>
+
+    <!-- PAGE 2: CALENDAR & TO-DO -->
+    <section id="calendar" class="page">
+      <h1>Calendar & To-do</h1>
+      <div class="sub">ปฏิทินและรายการงานใน <b class="glabel">OURS</b></div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" id="tabBtnCal" onclick="switchCalTab('cal')">📅 Calendar</button>
+        <button class="sub-tab" id="tabBtnTodo" onclick="switchCalTab('todo')">📝 To-do</button>
+      </div>
+
+      <div id="calSubView">
+        <div class="cal-nav">
+          <button onclick="changeMonth(-1)">◄</button>
+          <span id="monthLabel">กันยายน 2026</span>
+          <button onclick="changeMonth(1)">►</button>
+        </div>
+        <div class="cal-dow-row">
+          <div class="cal-dow">อา</div><div class="cal-dow">จ</div><div class="cal-dow">อ</div><div class="cal-dow">พ</div><div class="cal-dow">พฤ</div><div class="cal-dow">ศ</div><div class="cal-dow">ส</div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div id="calDayDetail"></div>
+
+        <div class="section-title">กิจกรรมเดือนนี้</div>
+        <div id="calEventsList"></div>
+        <button class="primary" onclick="openAddEventModal()">＋ เพิ่มกิจกรรมใหม่</button>
+      </div>
+
+      <div id="todoSubView" style="display:none">
+        <div class="section-title">ต้องทำ <span id="todoPendingCount"></span></div>
+        <div id="todoPendingList"></div>
+        <div class="section-title">เกินเวลา / ทำไม่ทัน <span id="todoOverdueCount"></span></div>
+        <div id="todoOverdueList"></div>
+        <div class="section-title">เสร็จแล้ว</div>
+        <div id="todoDoneList"></div>
+        <button class="primary" onclick="openModal('addTodoModal')">＋ เพิ่ม To-do ใหม่</button>
+      </div>
+    </section>
+
+    <!-- PAGE 3: EXPENSE -->
+    <section id="expense" class="page">
+      <h1>Expense</h1>
+      <div class="sub">จัดการค่าใช้จ่ายและการหารเงิน</div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" id="expGroupTab" onclick="switchExpTab('group')">👥 <span class="glabel">OURS</span></button>
+        <button class="sub-tab" id="expPrivTab" onclick="switchExpTab('private')">🔒 ส่วนตัว</button>
+      </div>
+      <div id="expenseSummary"></div>
+      <div class="section-title">รายการล่าสุด</div>
+      <div id="expenseList"></div>
+      <button class="primary" onclick="openAddExpenseModal()">＋ บันทึกค่าใช้จ่าย</button>
+    </section>
+
+    <!-- PAGE 4: SHOPPING -->
+    <section id="shopping" class="page">
+      <h1>Shopping List</h1>
+      <div class="sub">รายการซื้อของใช้ร่วมกันใน <b class="glabel">OURS</b></div>
+      <div class="categories" id="shopCatFilter"></div>
+      <div class="section-title">ยังไม่ได้ซื้อ <span id="shopPendingCount"></span></div>
+      <div id="shopPendingList"></div>
+      <div class="section-title">ซื้อแล้ว</div>
+      <div id="shopDoneList"></div>
+      <button class="primary" onclick="openAddShoppingModal()">＋ เพิ่มรายการซื้อของ</button>
+    </section>
+
+    <!-- PAGE 5: MEMORIES -->
+    <section id="memories" class="page">
+      <h1>Memories</h1>
+      <div class="sub">อัลบั้มบันทึกความทรงจำของ <b class="glabel">OURS</b></div>
+      <div class="row" style="gap:8px; margin-bottom:14px">
+        <input type="month" id="memoryMonthFilter" style="margin:0" onchange="renderMemories()">
+        <button class="option-btn" style="width:auto; margin:0; padding:10px 14px; white-space:nowrap" onclick="clearMemoryFilter()">ทั้งหมด</button>
+      </div>
+      <div class="memory-grid" id="memoryGrid"></div>
+      <button class="primary" style="margin-top:20px" onclick="openAddMemoryModal()">📸 เพิ่มความทรงจำใหม่</button>
+    </section>
+
+    <!-- PAGE 5b: MOOD CALENDAR (reached via Home Quick Add) -->
+    <section id="moodcal" class="page">
+      <button class="back-btn" onclick="showPage('home')">← กลับหน้า Home</button>
+      <h1>Mood Calendar</h1>
+      <div class="sub">อารมณ์ของสมาชิกใน <b class="glabel">OURS</b></div>
+      <div class="cal-nav">
+        <button onclick="changeMoodMonth(-1)">◄</button>
+        <span id="moodMonthLabel">กันยายน 2026</span>
+        <button onclick="changeMoodMonth(1)">►</button>
+      </div>
+      <div class="cal-dow-row">
+        <div class="cal-dow">อา</div><div class="cal-dow">จ</div><div class="cal-dow">อ</div><div class="cal-dow">พ</div><div class="cal-dow">พฤ</div><div class="cal-dow">ศ</div><div class="cal-dow">ส</div>
+      </div>
+      <div class="cal-grid" id="moodGrid"></div>
+      <div id="moodDayDetail"></div>
+      <button class="primary" onclick="openModal('moodModal')">😊 บันทึก Mood วันนี้</button>
+    </section>
+
+    <!-- PAGE: WISHLIST OVERVIEW -->
+    <section id="wishlistPage" class="page">
+      <button class="back-btn" onclick="showPage('home')">← กลับหน้า Home</button>
+      <h1>Wishlist ✨</h1>
+      <div class="sub">สิ่งที่อยากทำร่วมกันใน <b class="glabel">OURS</b></div>
+      <div class="sub-tabs" id="wishTabs">
+        <button class="sub-tab active" onclick="switchWishTab(this,'todo')">🎬 Things to do</button>
+        <button class="sub-tab" onclick="switchWishTab(this,'places')">📍 Places</button>
+        <button class="sub-tab" onclick="switchWishTab(this,'food')">🍕 Food</button>
+      </div>
+      <div id="wishList"></div>
+      <button class="primary" onclick="openAddWishlistModal()">＋ เพิ่ม Wishlist</button>
+    </section>
+
+    <!-- PAGE: AWARD OVERVIEW -->
+    <section id="awardPage" class="page">
+      <button class="back-btn" onclick="showPage('home')">← กลับหน้า Home</button>
+      <h1>Award & Scores 🏆</h1>
+      <div class="sub">คะแนนความน่ารักใน <b class="glabel">OURS</b></div>
+      <div class="card" style="text-align:center; background:var(--yellow-soft)">
+        <span style="font-size:32px">👑</span>
+        <b class="bold" style="display:block; margin-top:4px">คะแนนสะสมกลุ่ม</b>
+        <div style="font-size:24px; font-weight:600; color:var(--ink)" id="awardTotalScore">0 คะแนน</div>
+        <div class="muted" style="margin-top:6px" id="myAwardScore">คะแนนของฉัน: 0</div>
+      </div>
+      <div class="section-title">🥇 Leaderboard</div>
+      <div id="awardLeaderboard"></div>
+      <div class="section-title">ทำภารกิจ</div>
+      <button class="option-btn" onclick="confirmAward('🧹 ล้างจาน/ทำความสะอาด',10)">🧹 ล้างจาน/ทำความสะอาด (+10 คะแนน)</button>
+      <button class="option-btn" onclick="confirmAward('🍳 ทำอาหารให้กิน',15)">🍳 ทำอาหารให้กิน (+15 คะแนน)</button>
+      <div class="row" style="margin-top:8px; gap:8px">
+        <input id="customAwardName" placeholder="ภารกิจใหม่..." style="margin:0">
+        <input id="customAwardPoints" type="number" placeholder="คะแนน" style="margin:0; width:90px">
+        <button class="option-btn" style="width:auto; margin:0; padding:10px 14px" onclick="submitCustomAward()">＋</button>
+      </div>
+      <div class="section-title">🎁 Rewards</div>
+      <div id="awardRewards"></div>
+      <div class="section-title">ประวัติคะแนน</div>
+      <div id="awardHistory"></div>
+    </section>
+
+    <!-- PAGE 6: SETTING & PROFILE -->
+    <section id="setting" class="page">
+      <h1>Settings</h1>
+      <div class="sub">โปรไฟล์และการตั้งค่ากลุ่ม</div>
+
+      <div class="card" id="installCard" style="display:none">
+        <div class="row">
+          <div class="icon pink">📲</div>
+          <div class="grow"><b class="bold">ติดตั้งแอป OUR</b><div class="muted" id="installCardSub">เพิ่มไอคอนไว้ที่หน้าจอหลัก ใช้งานได้เหมือนแอปจริง</div></div>
+        </div>
+        <button class="primary" id="installBtn" style="display:none" onclick="triggerInstallPrompt()">📲 ติดตั้งแอปลงหน้าจอหลัก</button>
+      </div>
+
+      <div class="card">
+        <div class="profile-card">
+          <div class="profile-photo-wrap">
+            <div class="profile-avatar" id="profileAvatarBox">🌷</div>
+            <button type="button" class="photo-edit-btn" onclick="document.getElementById('profilePhotoInput').click()">✏️</button>
+            <input type="file" id="profilePhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhoto(this)">
+          </div>
+          <div class="grow">
+            <b class="bold" style="font-size:18px" id="profileNameDisplay">มิ้ว</b>
+            <div class="muted" id="usernameDisplay">@our_mew</div>
+            <span class="badge pink-bg" style="margin-top:4px; display:inline-block" id="profileRoleBadge">Group Owner 💕</span>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:10px; font-size:11.5px">ตั้งค่ารูปโปรไฟล์ได้แบบ 1:1 ความละเอียดสูงสุด 1080×1080 px ระบบจะครอปกลางภาพและย่อขนาดให้อัตโนมัติ</div>
+      </div>
+
+      <div class="card">
+        <b class="bold">แก้ไขข้อมูลส่วนตัว</b>
+        <label>Username (ไอดีของคุณ)</label>
+        <input id="usernameInput" value="our_mew" oninput="updateUsernamePreview(this.value)">
+        <label>Nickname (ชื่อแสดงในแอป)</label>
+        <input id="nicknameInput" value="มิ้ว" oninput="updateNickname(this.value)">
+        <button class="primary" onclick="saveProfile()">บันทึกการเปลี่ยนแปลง</button>
+      </div>
+
+      <div class="section-title">IMPORTANT DATES <span>วันสำคัญ</span></div>
+      <div id="importantDatesList"></div>
+      <button class="primary small" onclick="openModal('addImportantDateModal')">＋ เพิ่มวันสำคัญ</button>
+
+      <div class="section-title">GROUP MANAGEMENT <span>การจัดการกลุ่ม</span></div>
+      <div class="card">
+        <b class="bold">กลุ่มปัจจุบัน: <span class="glabel">OURS</span></b>
+        <div class="muted" style="margin-top:4px">รหัสเชิญชวน (Invite Code): <b id="inviteCodeDisplay" style="color:var(--pink-dark)">OUR-AB12CD</b></div>
+        <div class="link-row">
+          <button class="option-btn" onclick="copyInviteLink()">🔗 คัดลอก Link</button>
+          <button class="option-btn" onclick="showInviteQr()">📱 QR Code</button>
+        </div>
+        <div class="qr-box" id="inviteQrBox" style="display:none">
+          <div id="inviteQrImg" role="img" aria-label="QR Code เข้าร่วมกลุ่ม"></div>
+          <div class="link-text" id="inviteQrLink"></div>
+        </div>
+        <label style="margin-top:14px" id="memberCountLabel">สมาชิกในกลุ่ม</label>
+        <div id="memberList"></div>
+        <label style="margin-top:14px">เข้าร่วมกลุ่มอื่นด้วยรหัสเชิญ</label>
+        <div class="row" style="gap:8px">
+          <input id="settingsJoinCodeInput" placeholder="เช่น OUR-AB12CD" style="margin:0; text-transform:uppercase">
+          <button class="option-btn" style="width:auto; margin:0; padding:10px 14px" onclick="joinGroupBySettingsCode()">เข้าร่วม</button>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:var(--danger-soft)">
+        <b class="bold" style="color:var(--danger)">การตั้งค่าอื่นๆ</b>
+        <div class="toggle-row">
+          <div class="toggle-label"><b>🔔 การแจ้งเตือน (Notifications)</b><span class="toggle-state on" id="notifStateText">เปิดอยู่</span></div>
+          <button type="button" class="switch on" id="notifSwitch" onclick="toggleNotifications()"></button>
+        </div>
+        <button class="option-btn" onclick="toast('🔐 บันทึกการตั้งค่าความเป็นส่วนตัวแล้ว')">🔐 ความเป็นส่วนตัว (Privacy)</button>
+        <button class="option-btn" onclick="handleLeaveGroup()">🚪 ออกจากกลุ่ม (Leave Group)</button>
+        <button class="option-btn" onclick="handleTransferOwner()">👑 โอนความเป็นเจ้าของกลุ่ม</button>
+        <button class="option-btn" onclick="handleDeleteGroup()">🗑️ ลบกลุ่มนี้ (Delete Group)</button>
+        <button class="option-btn" style="color:var(--danger)" onclick="handleLogout()">🔓 ออกจากระบบ (Logout)</button>
+      </div>
+      <button class="primary" onclick="openModal('createGroupModal')">＋ สร้าง Group ใหม่</button>
+    </section>
+  </main>
+
+  <nav class="bottom">
+    <button class="nav active" onclick="showPage('home')"><span class="ni">🏠</span>Home</button>
+    <button class="nav" onclick="showPage('calendar')"><span class="ni">📅</span>Calendar</button>
+    <button class="nav" onclick="showPage('expense')"><span class="ni">💰</span>Expense</button>
+    <button class="nav" onclick="showPage('shopping')"><span class="ni">🛒</span>Shopping</button>
+    <button class="nav" onclick="showPage('memories')"><span class="ni">📸</span>Memories</button>
+    <button class="nav" onclick="showPage('setting')"><span class="ni">⚙️</span>Setting</button>
+  </nav>
+
+  <!-- MODALS -->
+
+  <div id="groupModal" class="modal" onclick="closeModalOnBg(event, 'groupModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>เลือก Group Context</h2><button class="close" onclick="closeModal('groupModal')">×</button></div>
+      <div id="groupList"></div>
+      <button class="primary" onclick="closeModal('groupModal'); openModal('createGroupModal');">＋ สร้าง Group ใหม่</button>
+    </div>
+  </div>
+
+  <div id="createGroupModal" class="modal" onclick="closeModalOnBg(event, 'createGroupModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>สร้าง Group ใหม่</h2><button class="close" onclick="closeModal('createGroupModal')">×</button></div>
+      <label>ชื่อ Group</label>
+      <input id="newGroupName" placeholder="เช่น ทีมงาน, เพื่อนมัธยม">
+      <label>เลือกไอคอน Group</label>
+      <div class="emoji-pick" id="groupEmojiPick">
+        <button class="active" onclick="pickGroupEmoji(this,'💕')">💕</button>
+        <button onclick="pickGroupEmoji(this,'🫶')">🫶</button>
+        <button onclick="pickGroupEmoji(this,'👨‍👩‍👧‍👦')">👨‍👩‍👧‍👦</button>
+        <button onclick="pickGroupEmoji(this,'🎓')">🎓</button>
+        <button onclick="pickGroupEmoji(this,'⚽')">⚽</button>
+        <button onclick="pickGroupEmoji(this,'💼')">💼</button>
+      </div>
+      <button class="primary" onclick="submitCreateGroup()">สร้าง Group</button>
+    </div>
+  </div>
+
+  <div id="quickAddModal" class="modal" onclick="closeModalOnBg(event, 'quickAddModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>Quick Add ➕</h2><button class="close" onclick="closeModal('quickAddModal')">×</button></div>
+      <div class="quick" style="grid-template-columns: repeat(3, 1fr); gap:12px">
+        <button onclick="closeModal('quickAddModal'); openModal('addTodoModal')"><span class="icon pink">📝</span><b>To-do</b></button>
+        <button onclick="closeModal('quickAddModal'); openAddEventModal()"><span class="icon pink">📅</span><b>Calendar</b></button>
+        <button onclick="closeModal('quickAddModal'); openAddExpenseModal()"><span class="icon green">💰</span><b>Expense</b></button>
+        <button onclick="closeModal('quickAddModal'); openAddShoppingModal()"><span class="icon pink">🛒</span><b>Shopping</b></button>
+        <button onclick="closeModal('quickAddModal'); openAddMemoryModal()"><span class="icon pink">📸</span><b>Memory</b></button>
+        <button onclick="closeModal('quickAddModal'); showPage('moodcal')"><span class="icon green">😊</span><b>Mood</b></button>
+        <button onclick="closeModal('quickAddModal'); showWishlistPage()"><span class="icon pink">✨</span><b>Wishlist</b></button>
+        <button onclick="closeModal('quickAddModal'); showAwardPage()"><span class="icon yellow">🏆</span><b>Award</b></button>
+        <button onclick="closeModal('quickAddModal'); openModal('announcementModal')"><span class="icon green">📢</span><b>Notice</b></button>
+        <button onclick="closeModal('quickAddModal'); openModal('petModal')"><span class="icon yellow">🐱</span><b>Pet</b></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="moodModal" class="modal" onclick="closeModalOnBg(event, 'moodModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>บันทึก Mood วันนี้ 😊</h2><button class="close" onclick="closeModal('moodModal')">×</button></div>
+      <div class="mood-grid" style="margin-bottom:16px" id="moodPickGrid">
+        <button class="mood" onclick="selectMood(this, '😄')">😄<small>ยิ้มกว้าง</small></button>
+        <button class="mood" onclick="selectMood(this, '🙂')">🙂<small>ยิ้ม</small></button>
+        <button class="mood" onclick="selectMood(this, '😐')">😐<small>เฉยๆ</small></button>
+        <button class="mood" onclick="selectMood(this, '😔')">😔<small>เหนื่อย/เศร้า</small></button>
+        <button class="mood" onclick="selectMood(this, '😭')">😭<small>ร้องไห้หนัก</small></button>
+      </div>
+      <label>เล่าความรู้สึกสั้นๆ (Note)</label>
+      <textarea id="moodNoteInput" rows="3" placeholder="วันนี้เจออะไรมาบ้าง..."></textarea>
+      <label>ความเป็นส่วนตัว</label>
+      <select id="moodPrivacy">
+        <option value="group">👥 Group (แชร์ให้สมาชิกในกลุ่มเห็น)</option>
+        <option value="private">🔒 ส่วนตัว (เห็นคนเดียว)</option>
+      </select>
+      <button class="primary" onclick="submitMood()">บันทึก Mood</button>
+      <button class="option-btn" style="margin-top:14px; text-align:center; justify-content:center" onclick="closeModal('moodModal'); showPage('moodcal');">📅 ดูปฏิทิน Mood ทั้งหมด</button>
+    </div>
+  </div>
+
+  <div id="addTodoModal" class="modal" onclick="closeModalOnBg(event, 'addTodoModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>สร้าง To-do ใหม่ 📝</h2><button class="close" onclick="closeModal('addTodoModal')">×</button></div>
+      <label>หัวข้อ To-do</label>
+      <input id="todoTitleInput" placeholder="เช่น ซื้อของเข้าบ้าน, ล้างรถ">
+      <label>มอบหมายให้ (Assignee)</label>
+      <select id="todoAssigneeInput"></select>
+      <label>กำหนดส่ง (Due Date)</label>
+      <input type="date" id="todoDueInput" value="2026-09-08">
+      <label>ความเป็นส่วนตัว</label>
+      <select id="todoPrivacyInput">
+        <option value="group">👥 Group</option>
+        <option value="private">🔒 ส่วนตัว</option>
+      </select>
+      <button class="primary" onclick="submitTodo()">สร้าง To-do</button>
+    </div>
+  </div>
+
+  <div id="addEventModal" class="modal" onclick="closeModalOnBg(event, 'addEventModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>เพิ่มกิจกรรมปฏิทิน 📅</h2><button class="close" onclick="closeModal('addEventModal')">×</button></div>
+      <label>ชื่อกิจกรรม</label>
+      <input id="eventTitleInput" placeholder="เช่น ไปดินเนอร์, ทริปต่างจังหวัด">
+      <label>วันที่</label>
+      <input type="date" id="eventDateInput" value="2026-09-08">
+      <label>เวลา</label>
+      <input type="time" id="eventTimeInput" value="19:00">
+      <label>สถานที่</label>
+      <input id="eventLocInput" placeholder="เช่น Major Ratchayothin">
+      <label>ผู้เข้าร่วม (Participants)</label>
+      <div class="chip-select" id="eventParticipantsPick"></div>
+      <label>แจ้งเตือนล่วงหน้า</label>
+      <select id="eventReminderInput">
+        <option value="0">ไม่แจ้งเตือน</option>
+        <option value="15">15 นาทีก่อน</option>
+        <option value="60">1 ชั่วโมงก่อน</option>
+        <option value="1440">1 วันก่อน</option>
+      </select>
+      <label style="display:flex; align-items:center; gap:8px; margin-top:12px">
+        <input type="checkbox" id="eventRecurringInput" style="width:auto; margin:0;"> ทำซ้ำทุกปี (Recurring)
+      </label>
+      <button class="primary" onclick="submitEvent()">บันทึกกิจกรรม</button>
+    </div>
+  </div>
+
+  <div id="editEventModal" class="modal" onclick="closeModalOnBg(event, 'editEventModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แก้ไขกิจกรรมปฏิทิน ✏️</h2><button class="close" onclick="closeModal('editEventModal')">×</button></div>
+      <label>ชื่อกิจกรรม</label>
+      <input id="editEventTitleInput" placeholder="เช่น ไปดินเนอร์, ทริปต่างจังหวัด">
+      <label>วันที่</label>
+      <input type="date" id="editEventDateInput">
+      <label>เวลา</label>
+      <input type="time" id="editEventTimeInput">
+      <label>สถานที่</label>
+      <input id="editEventLocInput" placeholder="เช่น Major Ratchayothin">
+      <label>ผู้เข้าร่วม (Participants)</label>
+      <div class="chip-select" id="editEventParticipantsPick"></div>
+      <label style="display:flex; align-items:center; gap:8px; margin-top:12px">
+        <input type="checkbox" id="editEventRecurringInput" style="width:auto; margin:0;"> ทำซ้ำทุกปี (Recurring)
+      </label>
+      <button class="primary" onclick="submitEditEvent()">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <div id="redeemModal" class="modal" onclick="closeModalOnBg(event, 'redeemModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แลกรางวัล 🎁</h2><button class="close" onclick="closeModal('redeemModal')">×</button></div>
+      <b class="bold" id="redeemRewardName">-</b>
+      <div class="points-avail" id="redeemAvailText">คุณมี 0 คะแนน</div>
+      <label>เลือกจำนวนคะแนนที่จะใช้แลก</label>
+      <div class="points-select">
+        <input type="range" id="redeemPointsRange" min="0" max="0" step="5" value="0" oninput="syncRedeemPoints(this.value)">
+        <div class="points-val" id="redeemPointsVal">0</div>
+      </div>
+      <input type="number" id="redeemPointsInput" min="0" style="margin-top:2px" oninput="syncRedeemPoints(this.value)">
+      <button class="primary" onclick="confirmRedeem()">＋ แลกแต้ม</button>
+    </div>
+  </div>
+
+  <div id="addExpenseModal" class="modal" onclick="closeModalOnBg(event, 'addExpenseModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>บันทึกค่าใช้จ่าย 💰</h2><button class="close" onclick="closeModal('addExpenseModal')">×</button></div>
+      <label>จำนวนเงิน (บาท)</label>
+      <input type="number" id="expAmountInput" placeholder="0.00" style="font-size:22px; font-weight:600">
+      <label>รายการ / รายละเอียด</label>
+      <input id="expTitleInput" placeholder="เช่น มื้อเย็น, ค่าน้ำค่าไฟ">
+      <label>ผู้จ่ายเงิน (Paid by)</label>
+      <select id="expPaidByInput"></select>
+      <label>คนหาร (เลือกได้หลายคน)</label>
+      <div class="chip-select" id="expResponsiblePick"></div>
+      <label>ความเป็นส่วนตัว</label>
+      <select id="expPrivacyInput">
+        <option value="group">👥 Group</option>
+        <option value="private">🔒 ส่วนตัว</option>
+      </select>
+      <button class="primary" onclick="submitExpense()">บันทึก Expense</button>
+    </div>
+  </div>
+
+  <div id="addShoppingModal" class="modal" onclick="closeModalOnBg(event, 'addShoppingModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>เพิ่มรายการซื้อของ 🛒</h2><button class="close" onclick="closeModal('addShoppingModal')">×</button></div>
+      <label>ชื่อสิ่งของ</label>
+      <input id="shopNameInput" placeholder="เช่น สบู่เหลว, นมสด">
+      <label>หมวดหมู่</label>
+      <select id="shopCatInput"></select>
+      <div class="row" style="margin-top:8px; gap:8px">
+        <input id="shopNewCatInput" placeholder="หรือพิมพ์หมวดใหม่..." style="margin:0">
+        <button class="option-btn" style="width:auto; margin:0; padding:10px 14px" onclick="addNewShopCategory()">＋</button>
+      </div>
+      <label>มอบหมายให้ซื้อ (ไม่บังคับ)</label>
+      <select id="shopBuyerInput"></select>
+      <button class="primary" onclick="submitShopping()">เพิ่มรายการ</button>
+    </div>
+  </div>
+
+  <div id="addMemoryModal" class="modal" onclick="closeModalOnBg(event, 'addMemoryModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>เพิ่มความทรงจำ 📸</h2><button class="close" onclick="closeModal('addMemoryModal')">×</button></div>
+      <label>รูปภาพ / วิดีโอ <span id="memoryCountLabel" style="font-weight:600; color:var(--muted); text-transform:none; letter-spacing:0">(0/20)</span></label>
+      <div class="row" style="gap:8px; margin-top:6px">
+        <button type="button" class="option-btn" style="justify-content:center; text-align:center" onclick="document.getElementById('memoryCameraInput').click()">📷 ถ่ายรูป</button>
+        <button type="button" class="option-btn" style="justify-content:center; text-align:center" onclick="document.getElementById('memoryLibraryInput').click()">🖼️ เลือกจากคลัง (หลายรูปได้)</button>
+      </div>
+      <input type="file" id="memoryCameraInput" accept="image/*,video/*" capture="environment" style="display:none" onchange="handleMemoryFile(this,'add')">
+      <input type="file" id="memoryLibraryInput" accept="image/*,video/*" multiple style="display:none" onchange="handleMemoryFile(this,'add')">
+      <div class="memory-preview-grid" id="memoryPreviewWrap" style="margin-top:10px"></div>
+      <label>หรือเลือกไอคอนความทรงจำ</label>
+      <div class="emoji-pick" id="memoryEmojiPick">
+        <button class="active" onclick="pickMemoryEmoji(this,'📷')">📷</button>
+        <button onclick="pickMemoryEmoji(this,'🌊')">🌊</button>
+        <button onclick="pickMemoryEmoji(this,'🍜')">🍜</button>
+        <button onclick="pickMemoryEmoji(this,'🎂')">🎂</button>
+        <button onclick="pickMemoryEmoji(this,'🎉')">🎉</button>
+        <button onclick="pickMemoryEmoji(this,'🐱')">🐱</button>
+      </div>
+      <label>วันที่ของความทรงจำ</label>
+      <input type="date" id="memoryDateInput" value="2026-09-08">
+      <label>คำอธิบาย (Caption)</label>
+      <textarea id="memoryCaptionInput" rows="2" placeholder="เล่าความประทับใจ..."></textarea>
+      <button class="primary" onclick="submitMemory()">บันทึกความทรงจำ</button>
+    </div>
+  </div>
+
+  <div id="editMemoryModal" class="modal" onclick="closeModalOnBg(event, 'editMemoryModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แก้ไขความทรงจำ ✏️</h2><button class="close" onclick="closeModal('editMemoryModal')">×</button></div>
+      <label>รูปภาพ / วิดีโอ <span id="editMemoryCountLabel" style="font-weight:600; color:var(--muted); text-transform:none; letter-spacing:0">(0/20)</span></label>
+      <div class="row" style="gap:8px; margin-top:6px">
+        <button type="button" class="option-btn" style="justify-content:center; text-align:center" onclick="document.getElementById('editMemoryCameraInput').click()">📷 ถ่ายรูป</button>
+        <button type="button" class="option-btn" style="justify-content:center; text-align:center" onclick="document.getElementById('editMemoryLibraryInput').click()">🖼️ เลือกจากคลัง (หลายรูปได้)</button>
+      </div>
+      <input type="file" id="editMemoryCameraInput" accept="image/*,video/*" capture="environment" style="display:none" onchange="handleMemoryFile(this,'edit')">
+      <input type="file" id="editMemoryLibraryInput" accept="image/*,video/*" multiple style="display:none" onchange="handleMemoryFile(this,'edit')">
+      <div class="memory-preview-grid" id="editMemoryPreviewWrap" style="margin-top:10px"></div>
+      <label>หรือเลือกไอคอนความทรงจำ</label>
+      <div class="emoji-pick" id="editMemoryEmojiPick">
+        <button onclick="pickEditMemoryEmoji(this,'📷')">📷</button>
+        <button onclick="pickEditMemoryEmoji(this,'🌊')">🌊</button>
+        <button onclick="pickEditMemoryEmoji(this,'🍜')">🍜</button>
+        <button onclick="pickEditMemoryEmoji(this,'🎂')">🎂</button>
+        <button onclick="pickEditMemoryEmoji(this,'🎉')">🎉</button>
+        <button onclick="pickEditMemoryEmoji(this,'🐱')">🐱</button>
+      </div>
+      <label>วันที่ของความทรงจำ</label>
+      <input type="date" id="editMemoryDateInput">
+      <label>คำอธิบาย (Caption)</label>
+      <textarea id="editMemoryCaptionInput" rows="2" placeholder="เล่าความประทับใจ..."></textarea>
+      <button class="primary" onclick="submitEditMemory()">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <div id="viewMemoryModal" class="modal" onclick="closeModalOnBg(event, 'viewMemoryModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2 id="viewMemoryCaption" style="font-size:17px">ความทรงจำ</h2><button class="close" onclick="closeModal('viewMemoryModal')">×</button></div>
+      <div class="muted" id="viewMemoryDate" style="margin:-8px 0 12px; font-size:12.5px"></div>
+      <div class="memory-view-grid" id="viewMemoryGrid"></div>
+    </div>
+  </div>
+
+  <div id="addWishlistModal" class="modal" onclick="closeModalOnBg(event, 'addWishlistModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2 id="wishModalTitle">เพิ่มรายการ Wishlist ✨</h2><button class="close" onclick="closeModal('addWishlistModal')">×</button></div>
+      <label>ชื่อรายการ</label>
+      <input id="wishTitleInput" placeholder="เช่น ไปคาเฟ่แมวแถวอารีย์">
+      <label>วันที่ (ไม่บังคับ)</label>
+      <input type="date" id="wishDateInput">
+      <label>เวลา (ไม่บังคับ)</label>
+      <input type="time" id="wishTimeInput">
+      <label>สถานที่</label>
+      <input id="wishPlaceInput" placeholder="เช่น อารีย์">
+      <label>Google Maps Link (ไม่บังคับ)</label>
+      <input id="wishLinkInput" placeholder="https://maps.google.com/...">
+      <label>รายละเอียดเพิ่มเติม</label>
+      <textarea id="wishDetailsInput" rows="2"></textarea>
+      <label>สถานะ</label>
+      <select id="wishStatusInput">
+        <option value="want">อยากทำ</option>
+        <option value="doing">กำลังทำ</option>
+        <option value="done">เสร็จสิ้น</option>
+      </select>
+      <button class="primary" onclick="submitWishlist()">＋ เพิ่ม Wishlist</button>
+    </div>
+  </div>
+
+  <div id="editWishlistModal" class="modal" onclick="closeModalOnBg(event, 'editWishlistModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แก้ไขรายการ Wishlist ✏️</h2><button class="close" onclick="closeModal('editWishlistModal')">×</button></div>
+      <label>ชื่อรายการ</label>
+      <input id="editWishTitleInput" placeholder="เช่น ไปคาเฟ่แมวแถวอารีย์">
+      <label>วันที่ (ไม่บังคับ)</label>
+      <input type="date" id="editWishDateInput">
+      <label>เวลา (ไม่บังคับ)</label>
+      <input type="time" id="editWishTimeInput">
+      <label>สถานที่</label>
+      <input id="editWishPlaceInput" placeholder="เช่น อารีย์">
+      <label>Google Maps Link (ไม่บังคับ)</label>
+      <input id="editWishLinkInput" placeholder="https://maps.google.com/...">
+      <label>รายละเอียดเพิ่มเติม</label>
+      <textarea id="editWishDetailsInput" rows="2"></textarea>
+      <label>สถานะ</label>
+      <select id="editWishStatusInput">
+        <option value="want">อยากทำ</option>
+        <option value="doing">กำลังทำ</option>
+        <option value="done">เสร็จสิ้น</option>
+      </select>
+      <button class="primary" onclick="submitEditWishlist()">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <div id="announcementModal" class="modal" onclick="closeModalOnBg(event, 'announcementModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>สร้างประกาศสำคัญ 📢</h2><button class="close" onclick="closeModal('announcementModal')">×</button></div>
+      <label>หัวข้อประกาศ</label>
+      <input id="annTitleInput" placeholder="เช่น พรุ่งนี้ 18:00 ไปกินหมูกระทะ">
+      <label>รายละเอียด</label>
+      <textarea id="annDetailsInput" rows="3" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+      <button class="primary" onclick="submitAnnouncement()">ส่งประกาศ</button>
+    </div>
+  </div>
+
+  <div id="addImportantDateModal" class="modal" onclick="closeModalOnBg(event, 'addImportantDateModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>เพิ่มวันสำคัญ</h2><button class="close" onclick="closeModal('addImportantDateModal')">×</button></div>
+      <label>ชื่อวันสำคัญ</label>
+      <input id="impNameInput" placeholder="เช่น วันครบรอบ, วันเกิดเพื่อน">
+      <label>ประเภท</label>
+      <select id="impTypeInput">
+        <option value="birthday">🎂 Birthday</option>
+        <option value="anniversary">💍 Anniversary</option>
+        <option value="custom">📌 Custom</option>
+      </select>
+      <label>วันที่ (เดือน-วัน)</label>
+      <input type="date" id="impDateInput" value="2026-09-08">
+      <label>แจ้งเตือนล่วงหน้า</label>
+      <select id="impReminderInput">
+        <option value="1">1 วัน</option>
+        <option value="3">3 วัน</option>
+        <option value="7">7 วัน</option>
+      </select>
+      <button class="primary" onclick="submitImportantDate()">บันทึกวันสำคัญ</button>
+    </div>
+  </div>
+
+  <div id="petModal" class="modal" onclick="closeModalOnBg(event, 'petModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>โปรไฟล์สัตว์เลี้ยง 🐱</h2><button class="close" onclick="closeModal('petModal')">×</button></div>
+      <div class="card">
+        <div class="row">
+          <div class="avatar" style="font-size:24px">🐱</div>
+          <div class="grow">
+            <b class="bold">เจ้าส้ม (SomSom)</b>
+            <div class="muted">พันธุ์: สก็อตติช โฟลด์ · อายุ 1 ขวบ</div>
+          </div>
+        </div>
+        <div style="font-size:12px; margin-top:10px; color:var(--muted)">
+          💉 วัคซีนเข็มถัดไป: 15 ต.ค. 2026<br>⚖️ น้ำหนักล่าสุด: 4.2 kg
+        </div>
+      </div>
+      <button class="primary" onclick="closeModal('petModal'); toast('บันทึกข้อมูลสัตว์เลี้ยงแล้ว');">＋ เพิ่มสัตว์เลี้ยง</button>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal" onclick="closeModalOnBg(event,'confirmModal')">
+    <div class="sheet" style="text-align:center">
+      <div style="font-size:38px; margin-bottom:6px" id="confirmIcon">🗑️</div>
+      <h2 id="confirmTitle">ยืนยันการลบ</h2>
+      <div class="muted" id="confirmMessage" style="margin:10px 0 4px"></div>
+      <div class="confirm-actions">
+        <button class="option-btn" onclick="closeModal('confirmModal')">ยกเลิก</button>
+        <button class="primary" id="confirmActionBtn" onclick="runConfirmAction()">ยืนยันลบ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editTodoModal" class="modal" onclick="closeModalOnBg(event, 'editTodoModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แก้ไข To-do 📝</h2><button class="close" onclick="closeModal('editTodoModal')">×</button></div>
+      <label>หัวข้อ To-do</label>
+      <input id="editTodoTitleInput" placeholder="เช่น ซื้อของเข้าบ้าน, ล้างรถ">
+      <label>มอบหมายให้ (Assignee)</label>
+      <select id="editTodoAssigneeInput"></select>
+      <label>กำหนดส่ง (Due Date)</label>
+      <input type="date" id="editTodoDueInput">
+      <label>รายละเอียดเพิ่มเติม</label>
+      <textarea id="editTodoDetailsInput" rows="2"></textarea>
+      <label>ความเป็นส่วนตัว</label>
+      <select id="editTodoPrivacyInput">
+        <option value="group">👥 Group</option>
+        <option value="private">🔒 ส่วนตัว</option>
+      </select>
+      <button class="primary" onclick="submitEditTodo()">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <div id="editShoppingModal" class="modal" onclick="closeModalOnBg(event, 'editShoppingModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แก้ไขรายการซื้อของ 🛒</h2><button class="close" onclick="closeModal('editShoppingModal')">×</button></div>
+      <label>ชื่อสิ่งของ</label>
+      <input id="editShopNameInput" placeholder="เช่น สบู่เหลว, นมสด">
+      <label>หมวดหมู่</label>
+      <select id="editShopCatInput"></select>
+      <label>มอบหมายให้ซื้อ (ไม่บังคับ)</label>
+      <select id="editShopBuyerInput"></select>
+      <button class="primary" onclick="submitEditShopping()">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <div id="editExpenseModal" class="modal" onclick="closeModalOnBg(event, 'editExpenseModal')">
+    <div class="sheet">
+      <div class="sheet-header"><h2>แก้ไขค่าใช้จ่าย 💰</h2><button class="close" onclick="closeModal('editExpenseModal')">×</button></div>
+      <label>จำนวนเงิน (บาท)</label>
+      <input type="number" id="editExpAmountInput" style="font-size:22px; font-weight:600">
+      <label>รายการ / รายละเอียด</label>
+      <input id="editExpTitleInput">
+      <label>ผู้จ่ายเงิน (Paid by)</label>
+      <select id="editExpPaidByInput"></select>
+      <label>คนหาร (เลือกได้หลายคน)</label>
+      <div class="chip-select" id="editExpResponsiblePick"></div>
+      <label>ความเป็นส่วนตัว</label>
+      <select id="editExpPrivacyInput">
+        <option value="group">👥 Group</option>
+        <option value="private">🔒 ส่วนตัว</option>
+      </select>
+      <button class="primary" onclick="submitEditExpense()">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script>
+/* ---------------------------------------------------------------------
+   Minimal inline QR code generator (SVG output only), trimmed from
+   qrcode-generator by Kazuhiko Arase (MIT license, d-project.com).
+   Runs fully client-side so invite QR codes work with no network call.
+--------------------------------------------------------------------- */
+var qrcode = function() {
+
+  var qrcode = function(typeNumber, errorCorrectionLevel) {
+    var PAD0 = 0xEC, PAD1 = 0x11;
+    var _typeNumber = typeNumber;
+    var _errorCorrectionLevel = QRErrorCorrectionLevel[errorCorrectionLevel];
+    var _modules = null, _moduleCount = 0, _dataCache = null, _dataList = [];
+    var _this = {};
+
+    var makeImpl = function(test, maskPattern) {
+      _moduleCount = _typeNumber * 4 + 17;
+      _modules = (function(moduleCount) {
+        var modules = new Array(moduleCount);
+        for (var row = 0; row < moduleCount; row += 1) {
+          modules[row] = new Array(moduleCount);
+          for (var col = 0; col < moduleCount; col += 1) modules[row][col] = null;
+        }
+        return modules;
+      })(_moduleCount);
+      setupPositionProbePattern(0, 0);
+      setupPositionProbePattern(_moduleCount - 7, 0);
+      setupPositionProbePattern(0, _moduleCount - 7);
+      setupPositionAdjustPattern();
+      setupTimingPattern();
+      setupTypeInfo(test, maskPattern);
+      if (_typeNumber >= 7) setupTypeNumber(test);
+      if (_dataCache == null) _dataCache = createData(_typeNumber, _errorCorrectionLevel, _dataList);
+      mapData(_dataCache, maskPattern);
+    };
+
+    var setupPositionProbePattern = function(row, col) {
+      for (var r = -1; r <= 7; r += 1) {
+        if (row + r <= -1 || _moduleCount <= row + r) continue;
+        for (var c = -1; c <= 7; c += 1) {
+          if (col + c <= -1 || _moduleCount <= col + c) continue;
+          if ((0 <= r && r <= 6 && (c == 0 || c == 6)) || (0 <= c && c <= 6 && (r == 0 || r == 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4)) {
+            _modules[row + r][col + c] = true;
+          } else {
+            _modules[row + r][col + c] = false;
+          }
+        }
+      }
+    };
+
+    var getBestMaskPattern = function() {
+      var minLostPoint = 0, pattern = 0;
+      for (var i = 0; i < 8; i += 1) {
+        makeImpl(true, i);
+        var lostPoint = QRUtil.getLostPoint(_this);
+        if (i == 0 || minLostPoint > lostPoint) { minLostPoint = lostPoint; pattern = i; }
+      }
+      return pattern;
+    };
+
+    var setupTimingPattern = function() {
+      for (var r = 8; r < _moduleCount - 8; r += 1) { if (_modules[r][6] != null) continue; _modules[r][6] = (r % 2 == 0); }
+      for (var c = 8; c < _moduleCount - 8; c += 1) { if (_modules[6][c] != null) continue; _modules[6][c] = (c % 2 == 0); }
+    };
+
+    var setupPositionAdjustPattern = function() {
+      var pos = QRUtil.getPatternPosition(_typeNumber);
+      for (var i = 0; i < pos.length; i += 1) {
+        for (var j = 0; j < pos.length; j += 1) {
+          var row = pos[i], col = pos[j];
+          if (_modules[row][col] != null) continue;
+          for (var r = -2; r <= 2; r += 1) {
+            for (var c = -2; c <= 2; c += 1) {
+              if (r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0)) _modules[row + r][col + c] = true;
+              else _modules[row + r][col + c] = false;
+            }
+          }
+        }
+      }
+    };
+
+    var setupTypeNumber = function(test) {
+      var bits = QRUtil.getBCHTypeNumber(_typeNumber);
+      for (var i = 0; i < 18; i += 1) { var mod = (!test && ((bits >> i) & 1) == 1); _modules[Math.floor(i / 3)][i % 3 + _moduleCount - 8 - 3] = mod; }
+      for (var i = 0; i < 18; i += 1) { var mod = (!test && ((bits >> i) & 1) == 1); _modules[i % 3 + _moduleCount - 8 - 3][Math.floor(i / 3)] = mod; }
+    };
+
+    var setupTypeInfo = function(test, maskPattern) {
+      var data = (_errorCorrectionLevel << 3) | maskPattern;
+      var bits = QRUtil.getBCHTypeInfo(data);
+      for (var i = 0; i < 15; i += 1) {
+        var mod = (!test && ((bits >> i) & 1) == 1);
+        if (i < 6) _modules[i][8] = mod; else if (i < 8) _modules[i + 1][8] = mod; else _modules[_moduleCount - 15 + i][8] = mod;
+      }
+      for (var i = 0; i < 15; i += 1) {
+        var mod = (!test && ((bits >> i) & 1) == 1);
+        if (i < 8) _modules[8][_moduleCount - i - 1] = mod; else if (i < 9) _modules[8][15 - i - 1 + 1] = mod; else _modules[8][15 - i - 1] = mod;
+      }
+      _modules[_moduleCount - 8][8] = (!test);
+    };
+
+    var mapData = function(data, maskPattern) {
+      var inc = -1, row = _moduleCount - 1, bitIndex = 7, byteIndex = 0;
+      var maskFunc = QRUtil.getMaskFunction(maskPattern);
+      for (var col = _moduleCount - 1; col > 0; col -= 2) {
+        if (col == 6) col -= 1;
+        while (true) {
+          for (var c = 0; c < 2; c += 1) {
+            if (_modules[row][col - c] == null) {
+              var dark = false;
+              if (byteIndex < data.length) dark = (((data[byteIndex] >>> bitIndex) & 1) == 1);
+              var mask = maskFunc(row, col - c);
+              if (mask) dark = !dark;
+              _modules[row][col - c] = dark;
+              bitIndex -= 1;
+              if (bitIndex == -1) { byteIndex += 1; bitIndex = 7; }
+            }
+          }
+          row += inc;
+          if (row < 0 || _moduleCount <= row) { row -= inc; inc = -inc; break; }
+        }
+      }
+    };
+
+    var createBytes = function(buffer, rsBlocks) {
+      var offset = 0, maxDcCount = 0, maxEcCount = 0;
+      var dcdata = new Array(rsBlocks.length), ecdata = new Array(rsBlocks.length);
+      for (var r = 0; r < rsBlocks.length; r += 1) {
+        var dcCount = rsBlocks[r].dataCount, ecCount = rsBlocks[r].totalCount - dcCount;
+        maxDcCount = Math.max(maxDcCount, dcCount);
+        maxEcCount = Math.max(maxEcCount, ecCount);
+        dcdata[r] = new Array(dcCount);
+        for (var i = 0; i < dcdata[r].length; i += 1) dcdata[r][i] = 0xff & buffer.getBuffer()[i + offset];
+        offset += dcCount;
+        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+        var rawPoly = qrPolynomial(dcdata[r], rsPoly.getLength() - 1);
+        var modPoly = rawPoly.mod(rsPoly);
+        ecdata[r] = new Array(rsPoly.getLength() - 1);
+        for (var i = 0; i < ecdata[r].length; i += 1) {
+          var modIndex = i + modPoly.getLength() - ecdata[r].length;
+          ecdata[r][i] = (modIndex >= 0) ? modPoly.getAt(modIndex) : 0;
+        }
+      }
+      var totalCodeCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) totalCodeCount += rsBlocks[i].totalCount;
+      var data = new Array(totalCodeCount), index = 0;
+      for (var i = 0; i < maxDcCount; i += 1) for (var r = 0; r < rsBlocks.length; r += 1) if (i < dcdata[r].length) { data[index] = dcdata[r][i]; index += 1; }
+      for (var i = 0; i < maxEcCount; i += 1) for (var r = 0; r < rsBlocks.length; r += 1) if (i < ecdata[r].length) { data[index] = ecdata[r][i]; index += 1; }
+      return data;
+    };
+
+    var createData = function(typeNumber, errorCorrectionLevel, dataList) {
+      var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectionLevel);
+      var buffer = qrBitBuffer();
+      for (var i = 0; i < dataList.length; i += 1) {
+        var data = dataList[i];
+        buffer.put(data.getMode(), 4);
+        buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber));
+        data.write(buffer);
+      }
+      var totalDataCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) totalDataCount += rsBlocks[i].dataCount;
+      if (buffer.getLengthInBits() > totalDataCount * 8) throw new Error('code length overflow.');
+      if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) buffer.put(0, 4);
+      while (buffer.getLengthInBits() % 8 != 0) buffer.putBit(false);
+      while (true) {
+        if (buffer.getLengthInBits() >= totalDataCount * 8) break;
+        buffer.put(PAD0, 8);
+        if (buffer.getLengthInBits() >= totalDataCount * 8) break;
+        buffer.put(PAD1, 8);
+      }
+      return createBytes(buffer, rsBlocks);
+    };
+
+    _this.addData = function(data) { _dataList.push(qr8BitByte(data)); _dataCache = null; };
+    _this.isDark = function(row, col) {
+      if (row < 0 || _moduleCount <= row || col < 0 || _moduleCount <= col) throw new Error(row + ',' + col);
+      return _modules[row][col];
+    };
+    _this.getModuleCount = function() { return _moduleCount; };
+    _this.make = function() { makeImpl(false, getBestMaskPattern()); };
+
+    _this.createSvgTag = function(cellSize, margin) {
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined') ? cellSize * 4 : margin;
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var c, mc, r, mr, qrSvg = '', rect;
+      rect = 'l' + cellSize + ',0 0,' + cellSize + ' -' + cellSize + ',0 0,-' + cellSize + 'z ';
+      qrSvg += '<svg width="' + size + 'px" height="' + size + 'px" viewBox="0 0 ' + size + ' ' + size + '" xmlns="http://www.w3.org/2000/svg">';
+      qrSvg += '<rect width="100%" height="100%" fill="#ffffff"/>';
+      qrSvg += '<path d="';
+      for (r = 0; r < _this.getModuleCount(); r += 1) {
+        mr = r * cellSize + margin;
+        for (c = 0; c < _this.getModuleCount(); c += 1) {
+          if (_this.isDark(r, c)) { mc = c * cellSize + margin; qrSvg += 'M' + mc + ',' + mr + rect; }
+        }
+      }
+      qrSvg += '" stroke="transparent" fill="#000000"/></svg>';
+      return qrSvg;
+    };
+
+    return _this;
+  };
+
+  qrcode.stringToBytes = function(s) {
+    var bytes = [];
+    for (var i = 0; i < s.length; i += 1) bytes.push(s.charCodeAt(i) & 0xff);
+    return bytes;
+  };
+
+  var QRMode = { MODE_8BIT_BYTE: 1 << 2 };
+  var QRErrorCorrectionLevel = { L: 1, M: 0, Q: 3, H: 2 };
+  var QRMaskPattern = { PATTERN000: 0, PATTERN001: 1, PATTERN010: 2, PATTERN011: 3, PATTERN100: 4, PATTERN101: 5, PATTERN110: 6, PATTERN111: 7 };
+
+  var QRUtil = (function() {
+    var PATTERN_POSITION_TABLE = [[], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50], [6, 30, 54], [6, 32, 58], [6, 34, 62], [6, 26, 46, 66], [6, 26, 48, 70], [6, 26, 50, 74], [6, 30, 54, 78], [6, 30, 56, 82], [6, 30, 58, 86], [6, 34, 62, 90], [6, 28, 50, 72, 94], [6, 26, 50, 74, 98], [6, 30, 54, 78, 102], [6, 28, 54, 80, 106], [6, 32, 58, 84, 110], [6, 30, 58, 86, 114], [6, 34, 62, 90, 118], [6, 26, 50, 74, 98, 122], [6, 30, 54, 78, 102, 126], [6, 26, 52, 78, 104, 130], [6, 30, 56, 82, 108, 134], [6, 34, 60, 86, 112, 138], [6, 30, 58, 86, 114, 142], [6, 34, 62, 90, 118, 146], [6, 30, 54, 78, 102, 126, 150], [6, 24, 50, 76, 102, 128, 154], [6, 28, 54, 80, 106, 132, 158], [6, 32, 58, 84, 110, 136, 162], [6, 26, 54, 82, 110, 138, 166], [6, 30, 58, 86, 114, 142, 170]];
+    var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
+    var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
+    var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1);
+    var _this = {};
+    var getBCHDigit = function(data) { var digit = 0; while (data != 0) { digit += 1; data >>>= 1; } return digit; };
+    _this.getBCHTypeInfo = function(data) {
+      var d = data << 10;
+      while (getBCHDigit(d) - getBCHDigit(G15) >= 0) d ^= (G15 << (getBCHDigit(d) - getBCHDigit(G15)));
+      return ((data << 10) | d) ^ G15_MASK;
+    };
+    _this.getBCHTypeNumber = function(data) {
+      var d = data << 12;
+      while (getBCHDigit(d) - getBCHDigit(G18) >= 0) d ^= (G18 << (getBCHDigit(d) - getBCHDigit(G18)));
+      return (data << 12) | d;
+    };
+    _this.getPatternPosition = function(typeNumber) { return PATTERN_POSITION_TABLE[typeNumber - 1]; };
+    _this.getMaskFunction = function(maskPattern) {
+      switch (maskPattern) {
+        case QRMaskPattern.PATTERN000: return function(i, j) { return (i + j) % 2 == 0; };
+        case QRMaskPattern.PATTERN001: return function(i, j) { return i % 2 == 0; };
+        case QRMaskPattern.PATTERN010: return function(i, j) { return j % 3 == 0; };
+        case QRMaskPattern.PATTERN011: return function(i, j) { return (i + j) % 3 == 0; };
+        case QRMaskPattern.PATTERN100: return function(i, j) { return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 == 0; };
+        case QRMaskPattern.PATTERN101: return function(i, j) { return (i * j) % 2 + (i * j) % 3 == 0; };
+        case QRMaskPattern.PATTERN110: return function(i, j) { return ((i * j) % 2 + (i * j) % 3) % 2 == 0; };
+        case QRMaskPattern.PATTERN111: return function(i, j) { return ((i * j) % 3 + (i + j) % 2) % 2 == 0; };
+        default: throw new Error('bad maskPattern:' + maskPattern);
+      }
+    };
+    _this.getErrorCorrectPolynomial = function(errorCorrectLength) {
+      var a = qrPolynomial([1], 0);
+      for (var i = 0; i < errorCorrectLength; i += 1) a = a.multiply(qrPolynomial([1, QRMath.gexp(i)], 0));
+      return a;
+    };
+    _this.getLengthInBits = function(mode, type) {
+      if (1 <= type && type < 10) return 8;
+      else if (type < 27) return 16;
+      else if (type < 41) return 16;
+      else throw new Error('type:' + type);
+    };
+    _this.getLostPoint = function(qrcode) {
+      var moduleCount = qrcode.getModuleCount(), lostPoint = 0;
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount; col += 1) {
+          var sameCount = 0, dark = qrcode.isDark(row, col);
+          for (var r = -1; r <= 1; r += 1) {
+            if (row + r < 0 || moduleCount <= row + r) continue;
+            for (var c = -1; c <= 1; c += 1) {
+              if (col + c < 0 || moduleCount <= col + c) continue;
+              if (r == 0 && c == 0) continue;
+              if (dark == qrcode.isDark(row + r, col + c)) sameCount += 1;
+            }
+          }
+          if (sameCount > 5) lostPoint += (3 + sameCount - 5);
+        }
+      }
+      for (var row = 0; row < moduleCount - 1; row += 1) {
+        for (var col = 0; col < moduleCount - 1; col += 1) {
+          var count = 0;
+          if (qrcode.isDark(row, col)) count += 1;
+          if (qrcode.isDark(row + 1, col)) count += 1;
+          if (qrcode.isDark(row, col + 1)) count += 1;
+          if (qrcode.isDark(row + 1, col + 1)) count += 1;
+          if (count == 0 || count == 4) lostPoint += 3;
+        }
+      }
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount - 6; col += 1) {
+          if (qrcode.isDark(row, col) && !qrcode.isDark(row, col + 1) && qrcode.isDark(row, col + 2) && qrcode.isDark(row, col + 3) && qrcode.isDark(row, col + 4) && !qrcode.isDark(row, col + 5) && qrcode.isDark(row, col + 6)) lostPoint += 40;
+        }
+      }
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount - 6; row += 1) {
+          if (qrcode.isDark(row, col) && !qrcode.isDark(row + 1, col) && qrcode.isDark(row + 2, col) && qrcode.isDark(row + 3, col) && qrcode.isDark(row + 4, col) && !qrcode.isDark(row + 5, col) && qrcode.isDark(row + 6, col)) lostPoint += 40;
+        }
+      }
+      var darkCount = 0;
+      for (var col = 0; col < moduleCount; col += 1) for (var row = 0; row < moduleCount; row += 1) if (qrcode.isDark(row, col)) darkCount += 1;
+      var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+      lostPoint += ratio * 10;
+      return lostPoint;
+    };
+    return _this;
+  })();
+
+  var QRMath = (function() {
+    var EXP_TABLE = new Array(256), LOG_TABLE = new Array(256);
+    for (var i = 0; i < 8; i += 1) EXP_TABLE[i] = 1 << i;
+    for (var i = 8; i < 256; i += 1) EXP_TABLE[i] = EXP_TABLE[i - 4] ^ EXP_TABLE[i - 5] ^ EXP_TABLE[i - 6] ^ EXP_TABLE[i - 8];
+    for (var i = 0; i < 255; i += 1) LOG_TABLE[EXP_TABLE[i]] = i;
+    var _this = {};
+    _this.glog = function(n) { if (n < 1) throw new Error('glog(' + n + ')'); return LOG_TABLE[n]; };
+    _this.gexp = function(n) { while (n < 0) n += 255; while (n >= 256) n -= 255; return EXP_TABLE[n]; };
+    return _this;
+  })();
+
+  function qrPolynomial(num, shift) {
+    if (typeof num.length == 'undefined') throw new Error(num.length + '/' + shift);
+    var _num = (function() {
+      var offset = 0;
+      while (offset < num.length && num[offset] == 0) offset += 1;
+      var _num = new Array(num.length - offset + shift);
+      for (var i = 0; i < num.length - offset; i += 1) _num[i] = num[i + offset];
+      return _num;
+    })();
+    var _this = {};
+    _this.getAt = function(index) { return _num[index]; };
+    _this.getLength = function() { return _num.length; };
+    _this.multiply = function(e) {
+      var num = new Array(_this.getLength() + e.getLength() - 1);
+      for (var i = 0; i < _this.getLength(); i += 1) for (var j = 0; j < e.getLength(); j += 1) num[i + j] ^= QRMath.gexp(QRMath.glog(_this.getAt(i)) + QRMath.glog(e.getAt(j)));
+      return qrPolynomial(num, 0);
+    };
+    _this.mod = function(e) {
+      if (_this.getLength() - e.getLength() < 0) return _this;
+      var ratio = QRMath.glog(_this.getAt(0)) - QRMath.glog(e.getAt(0));
+      var num = new Array(_this.getLength());
+      for (var i = 0; i < _this.getLength(); i += 1) num[i] = _this.getAt(i);
+      for (var i = 0; i < e.getLength(); i += 1) num[i] ^= QRMath.gexp(QRMath.glog(e.getAt(i)) + ratio);
+      return qrPolynomial(num, 0).mod(e);
+    };
+    return _this;
+  }
+
+  var QRRSBlock = (function() {
+    var RS_BLOCK_TABLE = [
+      [1, 26, 19], [1, 26, 16], [1, 26, 13], [1, 26, 9],
+      [1, 44, 34], [1, 44, 28], [1, 44, 22], [1, 44, 16],
+      [1, 70, 55], [1, 70, 44], [2, 35, 17], [2, 35, 13],
+      [1, 100, 80], [2, 50, 32], [2, 50, 24], [4, 25, 9],
+      [1, 134, 108], [2, 67, 43], [2, 33, 15, 2, 34, 16], [2, 33, 11, 2, 34, 12],
+      [2, 86, 68], [4, 43, 27], [4, 43, 19], [4, 43, 15],
+      [2, 98, 78], [4, 49, 31], [2, 32, 14, 4, 33, 15], [4, 39, 13, 1, 40, 14],
+      [2, 121, 97], [2, 60, 38, 2, 61, 39], [4, 40, 18, 2, 41, 19], [4, 40, 14, 2, 41, 15],
+      [2, 146, 116], [3, 58, 36, 2, 59, 37], [4, 36, 16, 4, 37, 17], [4, 36, 12, 4, 37, 13],
+      [2, 86, 68, 2, 87, 69], [4, 69, 43, 1, 70, 44], [6, 43, 19, 2, 44, 20], [6, 43, 15, 2, 44, 16],
+      [4, 101, 81], [1, 80, 50, 4, 81, 51], [4, 50, 22, 4, 51, 23], [3, 36, 12, 8, 37, 13],
+      [2, 116, 92, 2, 117, 93], [6, 58, 36, 2, 59, 37], [4, 46, 20, 6, 47, 21], [7, 42, 14, 4, 43, 15],
+      [4, 133, 107], [8, 59, 37, 1, 60, 38], [8, 44, 20, 4, 45, 21], [12, 33, 11, 4, 34, 12],
+      [3, 145, 115, 1, 146, 116], [4, 64, 40, 5, 65, 41], [11, 36, 16, 5, 37, 17], [11, 36, 12, 5, 37, 13],
+      [5, 109, 87, 1, 110, 88], [5, 65, 41, 5, 66, 42], [5, 54, 24, 7, 55, 25], [11, 36, 12, 7, 37, 13],
+      [5, 122, 98, 1, 123, 99], [7, 73, 45, 3, 74, 46], [15, 43, 19, 2, 44, 20], [3, 45, 15, 13, 46, 16],
+      [1, 135, 107, 5, 136, 108], [10, 74, 46, 1, 75, 47], [1, 50, 22, 15, 51, 23], [2, 42, 14, 17, 43, 15],
+      [5, 150, 120, 1, 151, 121], [9, 69, 43, 4, 70, 44], [17, 50, 22, 1, 51, 23], [2, 42, 14, 19, 43, 15],
+      [3, 141, 113, 4, 142, 114], [3, 70, 44, 11, 71, 45], [17, 47, 21, 4, 48, 22], [9, 39, 13, 16, 40, 14],
+      [3, 135, 107, 5, 136, 108], [3, 67, 41, 13, 68, 42], [15, 54, 24, 5, 55, 25], [15, 43, 15, 10, 44, 16]
+    ];
+    var qrRSBlock = function(totalCount, dataCount) { var _this = {}; _this.totalCount = totalCount; _this.dataCount = dataCount; return _this; };
+    var _this = {};
+    var getRsBlockTable = function(typeNumber, errorCorrectionLevel) {
+      switch (errorCorrectionLevel) {
+        case QRErrorCorrectionLevel.L: return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+        case QRErrorCorrectionLevel.M: return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+        case QRErrorCorrectionLevel.Q: return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+        case QRErrorCorrectionLevel.H: return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+        default: return undefined;
+      }
+    };
+    _this.getRSBlocks = function(typeNumber, errorCorrectionLevel) {
+      var rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel);
+      if (typeof rsBlock == 'undefined') throw new Error('bad rs block');
+      var length = rsBlock.length / 3, list = [];
+      for (var i = 0; i < length; i += 1) {
+        var count = rsBlock[i * 3 + 0], totalCount = rsBlock[i * 3 + 1], dataCount = rsBlock[i * 3 + 2];
+        for (var j = 0; j < count; j += 1) list.push(qrRSBlock(totalCount, dataCount));
+      }
+      return list;
+    };
+    return _this;
+  })();
+
+  var qrBitBuffer = function() {
+    var _buffer = [], _length = 0, _this = {};
+    _this.getBuffer = function() { return _buffer; };
+    _this.getLengthInBits = function() { return _length; };
+    _this.put = function(num, length) { for (var i = 0; i < length; i += 1) _this.putBit(((num >>> (length - i - 1)) & 1) == 1); };
+    _this.putBit = function(bit) {
+      var bufIndex = Math.floor(_length / 8);
+      if (_buffer.length <= bufIndex) _buffer.push(0);
+      if (bit) _buffer[bufIndex] |= (0x80 >>> (_length % 8));
+      _length += 1;
+    };
+    return _this;
+  };
+
+  var qr8BitByte = function(data) {
+    var _mode = QRMode.MODE_8BIT_BYTE, _bytes = qrcode.stringToBytes(data), _this = {};
+    _this.getMode = function() { return _mode; };
+    _this.getLength = function() { return _bytes.length; };
+    _this.write = function(buffer) { for (var i = 0; i < _bytes.length; i += 1) buffer.put(_bytes[i], 8); };
+    return _this;
+  };
+
+  return qrcode;
+}();
+</script>
+<script>
+/* ================= MOCK DATABASE (per-group isolated) ================= */
+const TODAY = '2026-09-08';
+let currentUser = 'mew';
+let currentGroup = 'ours';
+let selectedAccountEmail = null;
+let calMonth = 9, calYear = 2026, calSelectedDate = null;
+let moodMonth = 9, moodYear = 2026;
+let selectedMoodEmoji = null;
+let wishTab = 'todo';
+let selectedEventParticipants = [];
+let selectedExpResponsible = [];
+let pickedGroupEmoji = '💕';
+let pickedMemoryEmoji = '📷';
+const MAX_MEMORY_IMAGES = 20;
+let pickedMemoryImages = [];
+let profilePhotoDataUrl = null;
+let notificationsOn = true;
+
+const groups = {
+  ours: { name:'OURS', emoji:'💕', invite:'OUR-AB12CD', owner:'mew', admins:['tam'],
+    members:[ {id:'mew',name:'มิ้ว',emoji:'🌷',role:'Owner'}, {id:'tam',name:'ตั้ม',emoji:'👦',role:'Co-admin'} ] },
+  friends: { name:'แก๊งเพื่อน', emoji:'🫶', invite:'OUR-FR99XZ', owner:'mew', admins:[],
+    members:[ {id:'mew',name:'มิ้ว',emoji:'🌷',role:'Owner'}, {id:'ploy',name:'พลอย',emoji:'🐰',role:'Member'}, {id:'nine',name:'ไนน์',emoji:'🐨',role:'Member'} ] },
+  family: { name:'ครอบครัว', emoji:'👨‍👩‍👧‍👦', invite:'OUR-FM45AB', owner:'mom', admins:[],
+    members:[ {id:'mew',name:'มิ้ว',emoji:'🌷',role:'Member'}, {id:'mom',name:'แม่',emoji:'👩',role:'Owner'}, {id:'dad',name:'พ่อ',emoji:'👨',role:'Member'} ] }
+};
+
+/* ================= ACCOUNTS (mock email login) ================= */
+const accounts = [
+  { email:'mew@our.app',   userId:'mew',  name:'มิ้ว',  emoji:'🌷' },
+  { email:'tam@our.app',   userId:'tam',  name:'ตั้ม',  emoji:'👦' },
+  { email:'ploy@our.app',  userId:'ploy', name:'พลอย',  emoji:'🐰' },
+  { email:'mom@our.app',   userId:'mom',  name:'แม่',   emoji:'👩' },
+  { email:'newbie@our.app',userId:'newbie',name:'ผู้ใช้ใหม่', emoji:'🙂' }
+];
+let selectedAccountId = accounts[0].userId;
+
+const data = {
+  ours: {
+    todos:[
+      {id:1,title:'ซื้อของเข้าบ้าน',assignee:'mew',due:'2026-09-08',privacy:'group',done:false},
+      {id:2,title:'จองร้านอาหารเย็นวันศุกร์',assignee:'tam',due:'2026-09-09',privacy:'group',done:false},
+      {id:3,title:'ซักผ้าและพับผ้า',assignee:'mew',due:'2026-09-07',privacy:'group',done:false},
+      {id:4,title:'วางแผนทริปต่างจังหวัด',assignee:'tam',due:'2026-09-01',privacy:'group',done:true}
+    ],
+    events:[
+      {id:1,title:'ดูหนังด้วยกัน',date:'2026-09-08',time:'19:30',location:'Major Ratchayothin',owner:'mew',recurring:false,participants:['mew','tam']},
+      {id:2,title:'Personal Day Off (ตั้ม)',date:'2026-09-12',time:'',location:'',owner:'tam',recurring:false,participants:['tam']},
+      {id:3,title:'Birthday Party',date:'2026-03-14',time:'',location:'บ้าน',owner:'mew',recurring:true,participants:['mew','tam']}
+    ],
+    expenses:[
+      {id:1,title:'ซื้อของซูเปอร์มาร์เก็ต',amount:1200,category:'🛒',paidBy:'tam',createdBy:'tam',responsible:['mew','tam'],date:'2026-09-08',privacy:'group',payments:{tam:'paid',mew:'pending'}},
+      {id:2,title:'กาแฟและขนม',amount:350,category:'☕',paidBy:'mew',createdBy:'mew',responsible:['mew'],date:'2026-09-07',privacy:'private',payments:{mew:'paid'}}
+    ],
+    shopCategories:['food','house','pet','other'],
+    shopping:[
+      {id:1,name:'ทิชชู่เปียก & ทิชชู่ม้วน',category:'house',buyer:null,bought:false},
+      {id:2,name:'นมสดโอ๊ตมิลค์ 2 กล่อง',category:'food',buyer:'mew',bought:false},
+      {id:3,name:'อาหารแมวรสปลาทู',category:'pet',buyer:'tam',bought:false},
+      {id:4,name:'ขนมปังโฮลวีต',category:'food',buyer:'mew',bought:true}
+    ],
+    memories:[
+      {id:1,emoji:'🌊',date:'2026-08-12',caption:'ทริปเที่ยวทะเลพัทยาด้วยกัน 🏖️'},
+      {id:2,emoji:'🍜',date:'2026-07-01',caption:'ราเมงร้านโปรดเจ้าเดิม!'},
+      {id:3,emoji:'🐱',date:'2026-06-15',caption:'วันแรกที่พาเจ้าส้มเข้าบ้าน 🏡'},
+      {id:4,emoji:'🎂',date:'2026-03-14',caption:'จัดงานวันเกิดฉลองครบ 22 ปี 💗'}
+    ],
+    moods:{ '2026-09-08':{mew:{emoji:'🙂',privacy:'group'},tam:{emoji:'😄',privacy:'group'}}, '2026-09-07':{mew:{emoji:'😔',privacy:'group'}} },
+    posts:[
+      {id:1,author:'mew',text:'วันนี้เหนื่อยมากกกก แต่ก็ผ่านไปด้วยดี! เย็นนี้กินอะไรกันดีคะ? 🍲✨',time:'เมื่อ 10 นาทีที่แล้ว',privacy:'group',likes:3,replies:[{author:'tam',text:'หมูกระทะไหมมม เดี๋ยวเค้าเลี้ยงเอง! 🐷'}]}
+    ],
+    wishlist:[ {id:1,cat:'places',title:'ไปคาเฟ่แมวแถวอารีย์ 🐈',date:'',time:'',place:'อารีย์',link:'',details:'',status:'want'} ],
+    awards:{ score:145, perMember:{mew:70,tam:75}, history:[
+      {who:'tam',what:'🍳 ทำอาหารให้กิน',points:15,date:'2026-09-07'},
+      {who:'mew',what:'🧹 ล้างจาน/ทำความสะอาด',points:10,date:'2026-09-06'}
+    ], rewards:['เลือกร้านอาหาร','เลือกหนัง','ให้แฟนเลี้ยงข้าว'] },
+    announcements:[ {id:1,title:'พรุ่งนี้ 18:00 ไปกินหมูกระทะ',details:'นัดที่ร้านเดิมนะ',time:'7 ก.ย.',pinned:true} ],
+    importantDates:[ {id:1,name:'วันครบรอบแฟน',date:'2026-10-20',type:'anniversary',reminder:3}, {id:2,name:'วันเกิดตั้ม',date:'2026-11-05',type:'birthday',reminder:1} ]
+  },
+  friends: {
+    todos:[ {id:1,title:'จองที่พักทริปเขาใหญ่',assignee:'ploy',due:'2026-09-10',privacy:'group',done:false} ],
+    events:[ {id:1,title:'เที่ยวเขาใหญ่',date:'2026-09-20',time:'08:00',location:'เขาใหญ่',owner:'ploy',recurring:false,participants:['mew','ploy','nine']} ],
+    expenses:[ {id:1,title:'ค่าที่พักเขาใหญ่',amount:3000,category:'🏨',paidBy:'ploy',createdBy:'ploy',responsible:['mew','ploy','nine'],date:'2026-09-01',privacy:'group',payments:{ploy:'paid',mew:'pending',nine:'pending'}} ],
+    shopCategories:['food','house','pet','other'],
+    shopping:[ {id:1,name:'ขนมสำหรับปิ้งย่าง',category:'food',buyer:null,bought:false} ],
+    memories:[ {id:1,emoji:'🎉',date:'2026-05-01',caption:'ปาร์ตี้วันเกิดไนน์'} ],
+    moods:{ '2026-09-08':{ploy:{emoji:'😄',privacy:'group'}} },
+    posts:[ {id:1,author:'ploy',text:'ใครว่างวันเสาร์นี้บ้าง นัดกินหมูกระทะกันไหม',time:'เมื่อวาน',privacy:'group',likes:1,replies:[]} ],
+    wishlist:[ {id:1,cat:'todo',title:'ไปกระโดดร่ม',date:'',time:'',place:'',link:'',details:'',status:'want'} ],
+    awards:{ score:0, perMember:{}, history:[], rewards:[] },
+    announcements:[],
+    importantDates:[]
+  },
+  family: {
+    todos:[ {id:1,title:'จ่ายค่าน้ำค่าไฟ',assignee:'dad',due:'2026-09-05',privacy:'group',done:false} ],
+    events:[ {id:1,title:'ทานข้าวเย็นที่บ้าน',date:'2026-09-08',time:'18:00',location:'บ้าน',owner:'mom',recurring:false,participants:['mew','mom','dad']} ],
+    expenses:[ {id:1,title:'ค่าน้ำค่าไฟ',amount:1800,category:'💡',paidBy:'dad',createdBy:'dad',responsible:['dad','mom'],date:'2026-09-05',privacy:'group',payments:{dad:'paid',mom:'paid'}} ],
+    shopCategories:['food','house','pet','other'],
+    shopping:[ {id:1,name:'ผงซักฟอก',category:'house',buyer:'mom',bought:false} ],
+    memories:[ {id:1,emoji:'🧧',date:'2026-02-10',caption:'ตรุษจีนที่บ้านคุณย่า'} ],
+    moods:{},
+    posts:[ {id:1,author:'mom',text:'คืนนี้แม่ทำต้มยำนะจ๊ะ กลับมากินข้าวด้วยกัน',time:'2 ชม.ที่แล้ว',privacy:'group',likes:2,replies:[]} ],
+    wishlist:[],
+    awards:{ score:0, perMember:{}, history:[], rewards:[] },
+    announcements:[ {id:1,title:'วันเสาร์นี้ไปทำบุญที่วัด 9 โมงเช้า',details:'',time:'6 ก.ย.',pinned:true} ],
+    importantDates:[ {id:1,name:'วันเกิดพ่อ',date:'2026-12-01',type:'birthday',reminder:3} ]
+  }
+};
+
+const catIcons = { food:'🥦', house:'🏠', pet:'🐱', other:'📦' };
+const catLabels = { food:'อาหาร & ของสด', house:'ของใช้ในบ้าน', pet:'ของสัตว์เลี้ยง', other:'อื่นๆ' };
+let nextId = 1000;
+
+function g(){ return groups[currentGroup]; }
+function d(){ return data[currentGroup]; }
+function memberName(id){ const m = g().members.find(x=>x.id===id); return m ? m.name : id; }
+function memberEmoji(id){ const m = g().members.find(x=>x.id===id); return m ? m.emoji : '👤'; }
+function memberOptionsHtml(selectedId){
+  return g().members.map(m => `<option value="${m.id}" ${m.id===selectedId?'selected':''}>${m.emoji} ${m.name}${m.id===currentUser?' (คุณ)':''}</option>`).join('');
+}
+
+/* ================= NAVIGATION ================= */
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById(pageId);
+  if (target) target.classList.add('active');
+  const navs = document.querySelectorAll('.nav');
+  const pageMap = { home:0, calendar:1, expense:2, shopping:3, memories:4, setting:5 };
+  navs.forEach(n => n.classList.remove('active'));
+  if (pageMap[pageId] !== undefined) navs[pageMap[pageId]].classList.add('active');
+  if (pageId === 'moodcal') renderMoodCalendar();
+  if (pageId === 'wishlistPage') renderWishlist();
+  if (pageId === 'awardPage') renderAward();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ================= LOGIN / LOGOUT ================= */
+function accountFor(id){ return accounts.find(a=>a.userId===id) || {userId:id, name:id, emoji:'👤', email:id+'@our.app'}; }
+
+/* ---- login/signup tabs ---- */
+function switchAuthTab(tab){
+  const isLogin = tab === 'login';
+  document.getElementById('authTabLogin').classList.toggle('active', isLogin);
+  document.getElementById('authTabSignup').classList.toggle('active', !isLogin);
+  document.getElementById('authPaneLogin').classList.toggle('active', isLogin);
+  document.getElementById('authPaneSignup').classList.toggle('active', !isLogin);
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('signupError').textContent = '';
+}
+
+let signupEmoji = '🙂';
+function pickSignupEmoji(btn, emoji){
+  signupEmoji = emoji;
+  document.querySelectorAll('#signupEmojiPick button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* ---- demo/testing account picker (hidden behind a secondary link) ---- */
+function toggleDemoAccounts(){
+  const box = document.getElementById('demoBox');
+  const showing = box.classList.toggle('show');
+  document.getElementById('demoToggleLabel').textContent = showing ? 'ซ่อนบัญชีตัวอย่าง' : 'ใช้บัญชีตัวอย่างเพื่อทดลองระบบ';
+  if (showing) renderAccountPick();
+}
+
+function renderAccountPick(){
+  const wrap = document.getElementById('accountPick');
+  if(!wrap) return;
+  wrap.innerHTML = accounts.map(a => `
+    <button type="button" class="account-item ${a.userId===selectedAccountId?'active':''}" onclick="selectAccount('${a.userId}')">
+      <div class="avatar">${a.emoji}</div>
+      <div class="grow"><b>${a.name}</b><small>${a.email}</small></div>
+      <div class="check-mark">${a.userId===selectedAccountId?'✓':''}</div>
+    </button>`).join('');
+}
+
+function selectAccount(userId){
+  selectedAccountId = userId;
+  renderAccountPick();
+}
+
+function handleDemoLogin(){
+  completeLogin(selectedAccountId);
+}
+
+function myGroupKeys(){
+  return Object.keys(groups).filter(k => groups[k].members.some(m => m.id === currentUser));
+}
+
+/* ---- real login: match an email that already has an account ---- */
+function handleLoginSubmit(){
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  if (!email || !password){ errEl.textContent = 'กรุณากรอกอีเมลและรหัสผ่าน'; return; }
+  const acc = accounts.find(a => a.email.toLowerCase() === email);
+  if (!acc){ errEl.textContent = 'ไม่พบบัญชีนี้ ลองสมัครสมาชิกใหม่ดูนะ'; return; }
+  errEl.textContent = '';
+  completeLogin(acc.userId);
+}
+
+/* ---- real signup: create a brand-new account, like registering for the first time ---- */
+function handleSignupSubmit(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+  const password = document.getElementById('signupPassword').value;
+  const errEl = document.getElementById('signupError');
+  if (!name){ errEl.textContent = 'กรุณาระบุชื่อที่ใช้แสดง'; return; }
+  if (!email || !email.includes('@')){ errEl.textContent = 'กรุณากรอกอีเมลให้ถูกต้อง'; return; }
+  if (!password || password.length < 6){ errEl.textContent = 'รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'; return; }
+  if (accounts.some(a => a.email.toLowerCase() === email)){ errEl.textContent = 'อีเมลนี้มีบัญชีอยู่แล้ว ลองเข้าสู่ระบบแทน'; return; }
+  errEl.textContent = '';
+  const userId = 'u' + (nextId++);
+  accounts.push({ email, userId, name, emoji: signupEmoji });
+  toast(`สมัครสมาชิกสำเร็จ ยินดีต้อนรับ ${name} 👋`);
+  completeLogin(userId);
+}
+
+/* ---- shared post-auth flow: go straight to onboarding if the account has no group yet ---- */
+function completeLogin(userId){
+  currentUser = userId;
+  const acc = accountFor(currentUser);
+  const myGroups = myGroupKeys();
+  if (!myGroups.length){
+    document.body.classList.remove('logged-out');
+    document.getElementById('onboardGreeting').textContent = `สวัสดีคุณ ${acc.name} 👋 ตอนนี้คุณยังไม่มีกลุ่ม เริ่มต้นใช้งานโดย`;
+    document.getElementById('onboardScreen').classList.add('show');
+    return;
+  }
+  currentGroup = myGroups[0];
+  document.body.classList.remove('logged-out');
+  document.getElementById('onboardScreen').classList.remove('show');
+  applyUserIdentity();
+  setGroup(currentGroup, true);
+  toast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ ${acc.name} 👋`);
+}
+
+function applyUserIdentity(){
+  const acc = accountFor(currentUser);
+  const nameEl = document.getElementById('greetingName');
+  const profileNameEl = document.getElementById('profileNameDisplay');
+  const usernameEl = document.getElementById('usernameDisplay');
+  const usernameInput = document.getElementById('usernameInput');
+  const nicknameInput = document.getElementById('nicknameInput');
+  if(nameEl) nameEl.textContent = acc.name;
+  if(profileNameEl) profileNameEl.textContent = acc.name;
+  if(usernameEl) usernameEl.textContent = '@our_' + acc.userId;
+  if(usernameInput) usernameInput.value = 'our_' + acc.userId;
+  if(nicknameInput) nicknameInput.value = acc.name;
+  if(!profilePhotoDataUrl){
+    document.getElementById('profileAvatarBox').textContent = acc.emoji;
+  }
+  updateProfileRoleBadge();
+}
+
+function updateProfileRoleBadge(){
+  const badge = document.getElementById('profileRoleBadge');
+  if(!badge) return;
+  const grp = g();
+  const me = grp.members.find(m=>m.id===currentUser);
+  const role = me ? me.role : 'Member';
+  badge.textContent = (role==='Owner' ? 'Group Owner ' : role==='Co-admin' ? 'Co-admin ' : 'Member ') + grp.emoji;
+}
+
+function handleLogout(){
+  askConfirm('ต้องการออกจากระบบใช่หรือไม่? ข้อมูลของคุณจะถูกล็อกไว้จนกว่าจะเข้าสู่ระบบอีกครั้ง', function(){
+    document.body.classList.add('logged-out');
+    document.getElementById('onboardScreen').classList.remove('show');
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+    switchAuthTab('login');
+    toast('ออกจากระบบแล้ว');
+  }, { title:'ออกจากระบบ', icon:'🔓', confirmLabel:'ออกจากระบบ' });
+}
+
+/* ---- first-time onboarding: create group or join via invite code ---- */
+function showOnboardCreate(){
+  document.getElementById('onboardCreateBox').style.display = 'block';
+  document.getElementById('onboardJoinBox').style.display = 'none';
+}
+function showOnboardJoin(){
+  document.getElementById('onboardJoinBox').style.display = 'block';
+  document.getElementById('onboardCreateBox').style.display = 'none';
+}
+
+function submitOnboardCreateGroup(){
+  const name = document.getElementById('onboardGroupName').value.trim();
+  if(!name){ toast('กรุณาตั้งชื่อ Group'); return; }
+  const acc = accountFor(currentUser);
+  const key = 'grp' + (nextId++);
+  groups[key] = { name, emoji: pickedGroupEmoji, invite: 'OUR-' + Math.random().toString(36).slice(2,8).toUpperCase(), owner: currentUser, admins: [],
+    members: [ {id:currentUser, name:acc.name, emoji:acc.emoji, role:'Owner'} ] };
+  data[key] = { todos:[], events:[], expenses:[], shopCategories:['food','house','pet','other'], shopping:[], memories:[], moods:{}, posts:[], wishlist:[], awards:{score:0,perMember:{},history:[],rewards:[]}, announcements:[], importantDates:[] };
+  currentGroup = key;
+  document.getElementById('onboardScreen').classList.remove('show');
+  applyUserIdentity();
+  setGroup(key, true);
+  toast('สร้าง Group "' + name + '" สำเร็จ 🎉');
+}
+
+function submitOnboardJoinGroup(){
+  const code = document.getElementById('onboardInviteCode').value.trim().toUpperCase();
+  if(!code){ toast('กรุณาใส่รหัสคำเชิญ'); return; }
+  const key = Object.keys(groups).find(k => groups[k].invite.toUpperCase() === code);
+  if(!key){ toast('ไม่พบรหัสคำเชิญนี้ กรุณาตรวจสอบอีกครั้ง'); return; }
+  const acc = accountFor(currentUser);
+  const grp = groups[key];
+  if(!grp.members.some(m=>m.id===currentUser)) grp.members.push({id:currentUser, name:acc.name, emoji:acc.emoji, role:'Member'});
+  currentGroup = key;
+  document.getElementById('onboardScreen').classList.remove('show');
+  applyUserIdentity();
+  setGroup(key, true);
+  toast('เข้าร่วมกลุ่ม "' + grp.name + '" สำเร็จ 🎉');
+}
+
+function joinGroupBySettingsCode(){
+  const codeInput = document.getElementById('settingsJoinCodeInput');
+  const code = codeInput.value.trim().toUpperCase();
+  if(!code){ toast('กรุณาใส่รหัสคำเชิญ'); return; }
+  const key = Object.keys(groups).find(k => groups[k].invite.toUpperCase() === code);
+  if(!key){ toast('ไม่พบรหัสคำเชิญนี้ กรุณาตรวจสอบอีกครั้ง'); return; }
+  const acc = accountFor(currentUser);
+  const grp = groups[key];
+  if(grp.members.some(m=>m.id===currentUser)){ toast('คุณอยู่ในกลุ่มนี้อยู่แล้ว'); return; }
+  grp.members.push({id:currentUser, name:acc.name, emoji:acc.emoji, role:'Member'});
+  codeInput.value = '';
+  currentGroup = key;
+  setGroup(key);
+  toast('เข้าร่วมกลุ่ม "' + grp.name + '" สำเร็จ 🎉');
+}
+
+/* ================= CONFIRM DIALOG ================= */
+let pendingConfirmAction = null;
+function askConfirm(message, actionFn, opts){
+  opts = opts || {};
+  pendingConfirmAction = actionFn;
+  document.getElementById('confirmMessage').textContent = message;
+  document.getElementById('confirmTitle').textContent = opts.title || 'ยืนยันการลบ';
+  document.getElementById('confirmIcon').textContent = opts.icon || '🗑️';
+  document.getElementById('confirmActionBtn').textContent = opts.confirmLabel || 'ยืนยันลบ';
+  openModal('confirmModal');
+}
+function runConfirmAction(){
+  const action = pendingConfirmAction;
+  pendingConfirmAction = null;
+  closeModal('confirmModal');
+  if (action) action();
+}
+
+function switchCalTab(type) {
+  const calBtn = document.getElementById('tabBtnCal'), todoBtn = document.getElementById('tabBtnTodo');
+  const calView = document.getElementById('calSubView'), todoView = document.getElementById('todoSubView');
+  if (type === 'cal') { calBtn.classList.add('active'); todoBtn.classList.remove('active'); calView.style.display='block'; todoView.style.display='none'; }
+  else { todoBtn.classList.add('active'); calBtn.classList.remove('active'); todoView.style.display='block'; calView.style.display='none'; renderTodos(); }
+}
+
+function switchExpTab(type) {
+  document.getElementById('expGroupTab').classList.toggle('active', type === 'group');
+  document.getElementById('expPrivTab').classList.toggle('active', type === 'private');
+  renderExpense(type);
+}
+
+/* ================= GROUP SWITCHING ================= */
+function openGroupModal(){ renderGroupList(); openModal('groupModal'); }
+
+function renderGroupList(){
+  const wrap = document.getElementById('groupList');
+  const myKeys = myGroupKeys();
+  wrap.innerHTML = myKeys.map(key => {
+    const grp = groups[key];
+    const active = key === currentGroup;
+    return `<button class="option-btn" onclick="setGroup('${key}')">
+      <span>${grp.emoji} ${grp.name}</span>
+      ${active ? '<span class="badge pink-bg">กำลังใช้อยู่</span>' : ''}
+    </button>`;
+  }).join('') || `<div class="empty-hint">คุณยังไม่มีกลุ่ม</div>`;
+}
+
+function setGroup(key, silent) {
+  currentGroup = key;
+  const grp = g();
+  document.getElementById('groupBadge').textContent = grp.emoji;
+  document.getElementById('groupName').textContent = grp.name;
+  document.getElementById('homeGroupText').textContent = grp.name;
+  document.querySelectorAll('.glabel').forEach(el => el.textContent = grp.name);
+  closeModal('groupModal');
+  document.getElementById('inviteQrBox').style.display = 'none';
+  renderAll();
+  applyUserIdentity();
+  if(!silent) toast('สลับ Context เป็นกลุ่ม "' + grp.name + '" เรียบร้อย');
+}
+
+function pickGroupEmoji(btn, emoji){
+  document.querySelectorAll('#groupEmojiPick button, #onboardEmojiPick button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  pickedGroupEmoji = emoji;
+}
+
+function submitCreateGroup(){
+  const name = document.getElementById('newGroupName').value.trim();
+  if(!name){ toast('กรุณาตั้งชื่อ Group'); return; }
+  const acc = accountFor(currentUser);
+  const key = 'grp' + (nextId++);
+  groups[key] = { name, emoji: pickedGroupEmoji, invite: 'OUR-' + Math.random().toString(36).slice(2,8).toUpperCase(), owner: currentUser, admins: [],
+    members: [ {id:currentUser, name:acc.name, emoji:acc.emoji, role:'Owner'} ] };
+  data[key] = { todos:[], events:[], expenses:[], shopCategories:['food','house','pet','other'], shopping:[], memories:[], moods:{}, posts:[], wishlist:[], awards:{score:0,perMember:{},history:[],rewards:[]}, announcements:[], importantDates:[] };
+  document.getElementById('newGroupName').value = '';
+  closeModal('createGroupModal');
+  setGroup(key);
+  toast('สร้าง Group "' + name + '" สำเร็จ 🎉');
+}
+
+/* ================= HOME ================= */
+function renderAll(){
+  renderHome();
+  renderCalendarGrid();
+  renderCalendarEvents();
+  renderTodos();
+  renderExpense(document.getElementById('expPrivTab').classList.contains('active') ? 'private' : 'group');
+  renderShoppingCats();
+  renderShopping();
+  renderMemories();
+  renderSettingImportantDates();
+  renderMembers();
+  document.getElementById('inviteCodeDisplay').textContent = g().invite;
+}
+
+function todayLabelThai(){
+  const months = ['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const [y,m,dd] = TODAY.split('-').map(Number);
+  return `วันนี้ · ${dd} ${months[m]}`;
+}
+
+function renderHome(){
+  document.getElementById('todayDateLabel').textContent = todayLabelThai();
+
+  // Pinned announcements
+  const pins = d().announcements.filter(a=>a.pinned);
+  document.getElementById('pinnedWrap').innerHTML = pins.map(a => `
+    <div class="pin-card">
+      <div class="row">
+        <div class="icon" style="background:transparent; font-size:20px">📌</div>
+        <div class="grow">
+          <b class="bold">${a.title}</b>
+          ${a.details ? `<div class="muted" style="margin-top:2px">${a.details}</div>` : ''}
+        </div>
+        <button class="icon-btn" onclick="unpinAnnouncement(${a.id})" title="เลิกปัก">×</button>
+      </div>
+    </div>`).join('');
+
+  renderFeed();
+
+  // TODAY
+  const todayEvents = d().events.filter(e => e.date === TODAY);
+  const todayTodos = d().todos.filter(t => t.due === TODAY && !t.done);
+  const todayMoods = d().moods[TODAY] ? Object.entries(d().moods[TODAY]) : [];
+  let todayHtml = '';
+  todayEvents.forEach(e => todayHtml += `<div class="card"><div class="row"><div class="icon yellow">📅</div><div class="grow"><b class="bold">${e.title}</b><div class="muted">${e.time || ''} ${e.location ? '· '+e.location : ''}</div></div>${e.time?`<span class="badge pink-bg">${e.time}</span>`:''}</div></div>`);
+  todayTodos.forEach(t => todayHtml += `<div class="card"><div class="todo"><button class="check" onclick="toggleTodoById(${t.id})"></button><div class="grow"><b class="title bold">${t.title}</b><div class="muted">ครบกำหนดวันนี้ · มอบหมายให้ ${memberName(t.assignee)}</div></div></div></div>`);
+  if (todayMoods.length) {
+    todayHtml += `<div class="card"><div class="row"><div class="icon pink">😊</div><div class="grow"><b class="bold">Mood วันนี้</b><div class="muted">${todayMoods.map(([id,mv])=>memberName(id)+' '+mv.emoji).join(' · ')}</div></div><button class="badge pink-bg" onclick="showPage('moodcal')">ดูปฏิทิน</button></div></div>`;
+  }
+  document.getElementById('todayList').innerHTML = todayHtml || `<div class="empty-hint">วันนี้ยังไม่มีอะไรในกลุ่มนี้ ✨</div>`;
+
+  // UPCOMING
+  const upEvents = d().events.filter(e => e.date > TODAY).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,3);
+  const upTodos = d().todos.filter(t => t.due > TODAY && !t.done).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,2);
+  const upImp = d().importantDates.slice(0,2);
+  const upWish = d().wishlist.filter(w=>w.date).slice(0,2);
+  let upHtml = '';
+  upEvents.forEach(e => upHtml += `<div class="card"><div class="row"><div class="icon pink">📅</div><div class="grow"><b class="bold">${e.title}</b><div class="muted">${e.date}${e.time?' · '+e.time:''}</div></div></div></div>`);
+  upTodos.forEach(t => upHtml += `<div class="card"><div class="row"><div class="icon yellow">📝</div><div class="grow"><b class="bold">${t.title}</b><div class="muted">กำหนด ${t.due} · ${memberName(t.assignee)}</div></div></div></div>`);
+  upImp.forEach(i => upHtml += `<div class="card"><div class="row"><div class="icon pink">${i.type==='birthday'?'🎂':i.type==='anniversary'?'💍':'📌'}</div><div class="grow"><b class="bold">${i.name}</b><div class="muted">${i.date}</div></div><span class="badge pink-bg">วันสำคัญ</span></div></div>`);
+  upWish.forEach(w => upHtml += `<div class="card"><div class="row"><div class="icon green">✨</div><div class="grow"><b class="bold">${w.title}</b><div class="muted">${w.date} ${w.time||''}</div></div></div></div>`);
+  document.getElementById('upcomingList').innerHTML = upHtml || `<div class="empty-hint">ยังไม่มีแผนที่กำลังจะถึง</div>`;
+
+  // NEED ATTENTION
+  const overdue = d().todos.filter(t => t.due < TODAY && !t.done);
+  const unpaid = [];
+  d().expenses.forEach(e => { Object.entries(e.payments||{}).forEach(([id,st]) => { if (st==='pending') unpaid.push({expense:e, who:id}); }); });
+  const unassignedShop = d().shopping.filter(s => !s.bought && !s.buyer);
+  let attHtml = '';
+  overdue.forEach(t => attHtml += `<div class="card"><div class="row"><div class="icon danger">⚠️</div><div class="grow"><b class="bold">To-do เกินเวลา</b><div class="muted">รายการ: "${t.title}" ยังไม่ได้ทำ</div></div><button class="badge danger-bg" onclick="showPage('calendar'); switchCalTab('todo');">ดูรายการ</button></div></div>`);
+  if (unpaid.length) attHtml += `<div class="card"><div class="row"><div class="icon danger">💸</div><div class="grow"><b class="bold">ค่าใช้จ่ายยังไม่จ่าย ${unpaid.length} รายการ</b><div class="muted">ตรวจสอบใน Expense</div></div><button class="badge danger-bg" onclick="showPage('expense')">ดูรายการ</button></div></div>`;
+  if (unassignedShop.length) attHtml += `<div class="card"><div class="row"><div class="icon danger">🛒</div><div class="grow"><b class="bold">ของที่ยังไม่มีคนรับผิดชอบ ${unassignedShop.length} รายการ</b><div class="muted">ในรายการ Shopping</div></div><button class="badge danger-bg" onclick="showPage('shopping')">ดูรายการ</button></div></div>`;
+  document.getElementById('attentionList').innerHTML = attHtml || `<div class="empty-hint">ไม่มีอะไรต้องจัดการตอนนี้ 🎉</div>`;
+
+  // RECENT
+  const recentItems = [];
+  d().posts.slice(0,1).forEach(p => recentItems.push({icon:'💬', text:`${memberName(p.author)} โพสต์: "${p.text.slice(0,30)}${p.text.length>30?'...':''}"`}));
+  d().memories.slice(0,1).forEach(m => recentItems.push({icon:'📸', text:`เพิ่มความทรงจำ: ${m.caption}`}));
+  d().expenses.slice(0,1).forEach(e => recentItems.push({icon:'💰', text:`${memberName(e.paidBy)} บันทึกค่าใช้จ่าย "${e.title}" ฿${e.amount}`}));
+  d().announcements.slice(0,1).forEach(a => recentItems.push({icon:'📢', text:`ประกาศ: ${a.title}`}));
+  document.getElementById('recentList').innerHTML = recentItems.length ? recentItems.map(r=>`<div class="card"><div class="row"><div class="icon green">${r.icon}</div><div class="grow"><div style="font-size:13px">${r.text}</div></div></div></div>`).join('') : `<div class="empty-hint">ยังไม่มี Activity ล่าสุด</div>`;
+}
+
+function renderFeed(){
+  const feed = document.getElementById('feedList');
+  feed.innerHTML = d().posts.map(p => `
+    <div class="post-card" id="post-${p.id}">
+      <div class="post-header">
+        <div class="avatar">${memberEmoji(p.author)}</div>
+        <div class="post-meta"><b>${memberName(p.author)}</b><small>${p.time} · ${p.privacy==='private'?'🔒 ส่วนตัว':'👥 Group'}</small></div>
+        ${p.author===currentUser ? `<button class="icon-btn" onclick="deletePost(${p.id})">🗑️</button>` : ''}
+      </div>
+      <div class="post-body">${escapeHtml(p.text)}</div>
+      <div class="post-footer">
+        <button onclick="likePost(${p.id})">❤️ ${p.likes||0} ถูกใจ</button>
+        <button onclick="toggleReplyBox(${p.id})">💬 ${p.replies.length} ตอบกลับ</button>
+      </div>
+      ${p.replies.map(r => `<div class="reply-item"><b>${memberName(r.author)}:</b> ${escapeHtml(r.text)}</div>`).join('')}
+      <div class="reply-box" id="replybox-${p.id}" style="display:none">
+        <input id="replyinput-${p.id}" placeholder="พิมพ์ตอบกลับ...">
+        <button onclick="addReply(${p.id})">ส่ง</button>
+      </div>
+    </div>`).join('') || `<div class="empty-hint">ยังไม่มีโพสต์ในกลุ่มนี้</div>`;
+}
+
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+function addPost(){
+  const input = document.getElementById('postInput');
+  const text = input.value.trim();
+  if(!text){ toast('กรุณากรอกข้อความก่อนโพสต์'); return; }
+  const privacy = document.getElementById('postPrivacy').value;
+  d().posts.unshift({ id: nextId++, author: currentUser, text, time:'เมื่อสักครู่', privacy, likes:0, replies:[] });
+  input.value = '';
+  renderFeed();
+  renderHome();
+  toast('โพสต์เรียบร้อยแล้ว ✨');
+}
+
+function deletePost(id){
+  askConfirm('ยืนยันลบโพสต์นี้ ?', function(){
+    d().posts = d().posts.filter(p=>p.id!==id);
+    renderFeed();
+    toast('ลบโพสต์แล้ว');
+  });
+}
+
+function likePost(id){
+  const p = d().posts.find(p=>p.id===id);
+  if(p){ p.likes=(p.likes||0)+1; renderFeed(); }
+}
+
+function toggleReplyBox(id){
+  const box = document.getElementById('replybox-'+id);
+  box.style.display = box.style.display==='none' ? 'flex' : 'none';
+}
+
+function addReply(id){
+  const input = document.getElementById('replyinput-'+id);
+  const text = input.value.trim();
+  if(!text) return;
+  const p = d().posts.find(p=>p.id===id);
+  p.replies.push({author:currentUser, text});
+  input.value='';
+  renderFeed();
+  toast('ตอบกลับแล้ว 💬');
+}
+
+function unpinAnnouncement(id){
+  const a = d().announcements.find(a=>a.id===id);
+  if(a){ a.pinned=false; renderHome(); toast('เลิกปักหมุดประกาศแล้ว'); }
+}
+
+/* ================= CALENDAR ================= */
+const thMonths = ['','มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+function changeMonth(delta){
+  calMonth += delta;
+  if (calMonth < 1){ calMonth=12; calYear--; }
+  if (calMonth > 12){ calMonth=1; calYear++; }
+  calSelectedDate = null;
+  renderCalendarGrid();
+  renderCalendarEvents();
+  document.getElementById('calDayDetail').innerHTML = '';
+}
+
+function pad(n){ return n<10 ? '0'+n : ''+n; }
+
+function impDatesOnDay(dateStr){
+  // birthdays/anniversaries/holidays recur every year, so match on month-day
+  const md = dateStr.slice(5);
+  return d().importantDates.filter(i => i.date && i.date.slice(5) === md);
+}
+
+function impIcon(t){ return t==='birthday' ? '🎂' : t==='anniversary' ? '💍' : '📌'; }
+
+function renderCalendarGrid(){
+  document.getElementById('monthLabel').textContent = `${thMonths[calMonth]} ${calYear}`;
+  const grid = document.getElementById('calGrid');
+  const firstDow = new Date(calYear, calMonth-1, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth, 0).getDate();
+  let html = '';
+  for (let i=0;i<firstDow;i++) html += `<div class="cal-cell blank"></div>`;
+  for (let day=1; day<=daysInMonth; day++){
+    const dateStr = `${calYear}-${pad(calMonth)}-${pad(day)}`;
+    const isToday = dateStr === TODAY;
+    const hasEvent = d().events.some(e => e.date === dateStr);
+    const hasImp = impDatesOnDay(dateStr).length > 0;
+    const isSelected = dateStr === calSelectedDate;
+    const dots = (hasEvent || hasImp) ? `<span class="cal-dots">${hasEvent?'<span class="cal-dot"></span>':''}${hasImp?'<span class="cal-dot imp"></span>':''}</span>` : '';
+    html += `<button class="cal-cell ${isToday?'today':''} ${isSelected?'selected':''}" onclick="selectCalDay('${dateStr}')">${day}${dots}</button>`;
+  }
+  grid.innerHTML = html;
+}
+
+function selectCalDay(dateStr){
+  calSelectedDate = dateStr;
+  renderCalendarGrid();
+  const evs = d().events.filter(e => e.date === dateStr);
+  const imps = impDatesOnDay(dateStr);
+  const detail = document.getElementById('calDayDetail');
+  if (!evs.length && !imps.length){ detail.innerHTML = `<div class="empty-hint">ไม่มีกิจกรรมในวันที่ ${dateStr}</div>`; return; }
+  detail.innerHTML = imps.map(i => `
+    <div class="card">
+      <div class="row">
+        <div class="icon pink">${impIcon(i.type)}</div>
+        <div class="grow"><b class="bold">${i.name}</b><div class="muted">วันสำคัญ · แจ้งเตือนล่วงหน้า ${i.reminder} วัน</div></div>
+        <span class="badge pink-bg">วันสำคัญ</span>
+      </div>
+    </div>`).join('') + evs.map(e => `
+    <div class="card">
+      <div class="row">
+        <div class="icon yellow">📅</div>
+        <div class="grow"><b class="bold">${e.title}</b><div class="muted">${e.time||''} ${e.location?'· '+e.location:''} · เจ้าของ: ${memberName(e.owner)}</div></div>
+        ${e.owner===currentUser ? `<div class="row-actions"><button class="icon-btn" onclick="openEditEventModal(${e.id})">✏️</button><button class="icon-btn" onclick="deleteEvent(${e.id})">🗑️</button></div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function renderCalendarEvents(){
+  const monthPrefix = `${calYear}-${pad(calMonth)}`;
+  const evs = d().events.filter(e => e.date.startsWith(monthPrefix)).map(e => ({...e, _sortDay: e.date.slice(8,10), _kind:'event'}));
+  const imps = d().importantDates.filter(i => i.date && i.date.slice(5,7) === pad(calMonth)).map(i => ({...i, _sortDay: i.date.slice(8,10), _kind:'imp'}));
+  const combined = [...evs, ...imps].sort((a,b)=>a._sortDay.localeCompare(b._sortDay));
+  const list = document.getElementById('calEventsList');
+  list.innerHTML = combined.map(item => {
+    if (item._kind === 'imp'){
+      return `
+    <div class="card">
+      <div class="row">
+        <div class="icon pink">${impIcon(item.type)}</div>
+        <div class="grow"><b class="bold">${item._sortDay} ${thMonths[+item.date.slice(5,7)].slice(0,3)}. · ${item.name}</b><div class="muted">วันสำคัญ · แจ้งเตือนล่วงหน้า ${item.reminder} วัน</div></div>
+        <span class="badge pink-bg">วันสำคัญ</span>
+      </div>
+    </div>`;
+    }
+    const e = item;
+    return `
+    <div class="card">
+      <div class="row">
+        <div class="icon ${e.title.includes('Day Off')?'green':'yellow'}">${e.title.includes('Day Off')?'🏖️':'📅'}</div>
+        <div class="grow"><b class="bold">${e.date.slice(8,10)} ${thMonths[+e.date.slice(5,7)].slice(0,3)}. · ${e.title}</b><div class="muted">${e.time||''} ${e.location?'· '+e.location:''}</div></div>
+        ${e.owner===currentUser ? `<div class="row-actions"><button class="icon-btn" onclick="openEditEventModal(${e.id})">✏️</button><button class="icon-btn" onclick="deleteEvent(${e.id})">🗑️</button></div>` : `<span class="badge">${memberName(e.owner)}</span>`}
+      </div>
+    </div>`;
+  }).join('') || `<div class="empty-hint">ไม่มีกิจกรรมในเดือนนี้</div>`;
+}
+
+function deleteEvent(id){
+  const e = d().events.find(e=>e.id===id);
+  askConfirm(`ยืนยันลบกิจกรรม "${e?e.title:''}" ?`, function(){
+    d().events = d().events.filter(e=>e.id!==id);
+    renderCalendarGrid(); renderCalendarEvents(); renderHome();
+    if (document.getElementById('calDayDetail')) selectCalDay(calSelectedDate || TODAY);
+    toast('ลบกิจกรรมแล้ว');
+  });
+}
+
+function openAddEventModal(){
+  document.getElementById('eventDateInput').value = TODAY;
+  selectedEventParticipants = [currentUser];
+  document.getElementById('eventParticipantsPick').innerHTML = g().members.map(m =>
+    `<button type="button" class="chip ${m.id===currentUser?'active':''}" onclick="toggleChip(this, 'event', '${m.id}')">${m.emoji} ${m.name}</button>`).join('');
+  openModal('addEventModal');
+}
+
+function toggleChip(btn, kind, id){
+  btn.classList.toggle('active');
+  const arr = kind==='event' ? selectedEventParticipants : selectedExpResponsible;
+  const idx = arr.indexOf(id);
+  if (idx>=0) arr.splice(idx,1); else arr.push(id);
+}
+
+function submitEvent(){
+  const title = document.getElementById('eventTitleInput').value.trim();
+  if(!title){ toast('กรุณาระบุชื่อกิจกรรม'); return; }
+  d().events.push({
+    id: nextId++, title,
+    date: document.getElementById('eventDateInput').value,
+    time: document.getElementById('eventTimeInput').value,
+    location: document.getElementById('eventLocInput').value.trim(),
+    owner: currentUser,
+    recurring: document.getElementById('eventRecurringInput').checked,
+    participants: selectedEventParticipants.length ? selectedEventParticipants : [currentUser]
+  });
+  document.getElementById('eventTitleInput').value='';
+  document.getElementById('eventLocInput').value='';
+  closeModal('addEventModal');
+  renderCalendarGrid(); renderCalendarEvents(); renderHome();
+  toast('เพิ่มกิจกรรมลง Calendar เรียบร้อย!');
+}
+
+let editingEventId = null;
+function openEditEventModal(id){
+  const e = d().events.find(e=>e.id===id);
+  if(!e) return;
+  if(e.owner!==currentUser){ toast('แก้ไขได้เฉพาะกิจกรรมที่คุณสร้างเอง'); return; }
+  editingEventId = id;
+  document.getElementById('editEventTitleInput').value = e.title;
+  document.getElementById('editEventDateInput').value = e.date;
+  document.getElementById('editEventTimeInput').value = e.time || '';
+  document.getElementById('editEventLocInput').value = e.location || '';
+  document.getElementById('editEventRecurringInput').checked = !!e.recurring;
+  selectedEventParticipants = [...e.participants];
+  document.getElementById('editEventParticipantsPick').innerHTML = g().members.map(m =>
+    `<button type="button" class="chip ${selectedEventParticipants.includes(m.id)?'active':''}" onclick="toggleChip(this, 'event', '${m.id}')">${m.emoji} ${m.name}</button>`).join('');
+  openModal('editEventModal');
+}
+
+function submitEditEvent(){
+  const e = d().events.find(e=>e.id===editingEventId);
+  if(!e) return;
+  const title = document.getElementById('editEventTitleInput').value.trim();
+  if(!title){ toast('กรุณาระบุชื่อกิจกรรม'); return; }
+  e.title = title;
+  e.date = document.getElementById('editEventDateInput').value;
+  e.time = document.getElementById('editEventTimeInput').value;
+  e.location = document.getElementById('editEventLocInput').value.trim();
+  e.recurring = document.getElementById('editEventRecurringInput').checked;
+  e.participants = selectedEventParticipants.length ? selectedEventParticipants : [currentUser];
+  closeModal('editEventModal');
+  renderCalendarGrid(); renderCalendarEvents(); renderHome();
+  if (document.getElementById('calDayDetail')) selectCalDay(calSelectedDate || TODAY);
+  toast('บันทึกการแก้ไขกิจกรรมเรียบร้อย ✅');
+}
+
+/* ================= TO-DO ================= */
+function renderTodos(){
+  const pending = d().todos.filter(t => !t.done && t.due >= TODAY);
+  const overdue = d().todos.filter(t => !t.done && t.due < TODAY);
+  const done = d().todos.filter(t => t.done);
+  document.getElementById('todoPendingCount').textContent = `(${pending.length} รายการ)`;
+  document.getElementById('todoOverdueCount').textContent = `(${overdue.length} รายการ)`;
+
+  const rowHtml = (t, overdueStyle) => `
+    <div class="card ${overdueStyle?'':''}" style="${overdueStyle?'border-left:4px solid var(--danger)':''}">
+      <div class="todo">
+        <button class="check" onclick="toggleTodoById(${t.id})"></button>
+        <div class="grow">
+          <b class="title bold" style="${overdueStyle?'color:var(--danger)':''}">${t.title}</b>
+          <div class="muted">กำหนด ${t.due}${t.due===TODAY?' (วันนี้)':''} · มอบหมายให้: ${memberName(t.assignee)} · ${t.privacy==='private'?'🔒':'👥'}</div>
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn" onclick="openEditTodoModal(${t.id})">✏️</button>
+          <button class="icon-btn" onclick="deleteTodo(${t.id})">🗑️</button>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('todoPendingList').innerHTML = pending.map(t=>rowHtml(t,false)).join('') || `<div class="empty-hint">ไม่มี To-do ที่ต้องทำ</div>`;
+  document.getElementById('todoOverdueList').innerHTML = overdue.map(t=>rowHtml(t,true)).join('') || `<div class="empty-hint">ไม่มีรายการเกินเวลา 🎉</div>`;
+  document.getElementById('todoDoneList').innerHTML = done.map(t => `
+    <div class="card done"><div class="todo"><button class="check" onclick="toggleTodoById(${t.id})">✓</button><div class="grow"><b class="title bold">${t.title}</b><div class="muted">เสร็จสมบูรณ์แล้ว · แตะติ๊กเพื่อยกเลิก</div></div>
+    <div class="row-actions"><button class="icon-btn" onclick="deleteTodo(${t.id})">🗑️</button></div></div></div>`).join('') || `<div class="empty-hint">ยังไม่มีรายการที่เสร็จ</div>`;
+
+  document.getElementById('todoAssigneeInput').innerHTML = memberOptionsHtml(currentUser);
+}
+
+function toggleTodoById(id){
+  const t = d().todos.find(t=>t.id===id);
+  if(!t) return;
+  t.done = !t.done;
+  renderTodos(); renderHome();
+  toast(t.done ? 'ทำรายการเสร็จแล้ว 🎉' : 'กดติ๊กออกแล้ว กลับไปช่องเดิม');
+}
+
+function submitTodo(){
+  const title = document.getElementById('todoTitleInput').value.trim();
+  if(!title){ toast('กรุณาระบุหัวข้อ To-do'); return; }
+  d().todos.push({
+    id: nextId++, title,
+    assignee: document.getElementById('todoAssigneeInput').value,
+    due: document.getElementById('todoDueInput').value,
+    privacy: document.getElementById('todoPrivacyInput').value,
+    done: false
+  });
+  document.getElementById('todoTitleInput').value='';
+  closeModal('addTodoModal');
+  renderTodos(); renderHome();
+  toast('สร้าง To-do "' + title + '" เรียบร้อยแล้ว!');
+}
+
+let editingTodoId = null;
+function openEditTodoModal(id){
+  const t = d().todos.find(t=>t.id===id);
+  if(!t) return;
+  editingTodoId = id;
+  document.getElementById('editTodoTitleInput').value = t.title;
+  document.getElementById('editTodoAssigneeInput').innerHTML = memberOptionsHtml(t.assignee);
+  document.getElementById('editTodoDueInput').value = t.due;
+  document.getElementById('editTodoDetailsInput').value = t.details || '';
+  document.getElementById('editTodoPrivacyInput').value = t.privacy;
+  openModal('editTodoModal');
+}
+
+function submitEditTodo(){
+  const t = d().todos.find(t=>t.id===editingTodoId);
+  if(!t) return;
+  const title = document.getElementById('editTodoTitleInput').value.trim();
+  if(!title){ toast('กรุณาระบุหัวข้อ To-do'); return; }
+  t.title = title;
+  t.assignee = document.getElementById('editTodoAssigneeInput').value;
+  t.due = document.getElementById('editTodoDueInput').value;
+  t.details = document.getElementById('editTodoDetailsInput').value.trim();
+  t.privacy = document.getElementById('editTodoPrivacyInput').value;
+  closeModal('editTodoModal');
+  renderTodos(); renderHome();
+  toast('บันทึกการแก้ไข To-do แล้ว');
+}
+
+function deleteTodo(id){
+  const t = d().todos.find(t=>t.id===id);
+  if(!t) return;
+  askConfirm(`ยืนยันลบ To-do "${t.title}" ?`, function(){
+    d().todos = d().todos.filter(x=>x.id!==id);
+    renderTodos(); renderHome();
+    toast('ลบ To-do แล้ว');
+  });
+}
+
+/* ================= EXPENSE ================= */
+function renderExpense(tab){
+  const isGroup = tab !== 'private';
+  const list = isGroup ? d().expenses.filter(e=>e.privacy==='group') : d().expenses.filter(e=>e.privacy==='private');
+
+  const total = list.reduce((s,e)=>s+e.amount,0);
+  let myShare = 0;
+  list.forEach(e => { if ((e.responsible||[]).includes(currentUser)) myShare += e.amount / e.responsible.length; });
+  const allSettled = list.every(e => Object.values(e.payments||{}).every(s=>s==='paid'));
+
+  document.getElementById('expenseSummary').innerHTML = `
+    <div class="card" style="background: linear-gradient(135deg, #fff0f5 0%, #fff9df 100%);">
+      <div style="font-size:12px; color:var(--muted); font-weight:700">ยอดรวมค่าใช้จ่าย${isGroup?'กลุ่ม':'ส่วนตัว'}เดือนนี้</div>
+      <div style="font-size:30px; font-weight:600; margin:4px 0 8px; color:var(--ink)">฿ ${total.toLocaleString()}</div>
+      <div style="display:flex; justify-content:space-between; font-size:12px; border-top:1px solid rgba(0,0,0,0.06); padding-top:8px">
+        <span>ส่วนของคุณที่ต้องจ่าย: <b>฿ ${myShare.toLocaleString(undefined,{maximumFractionDigits:0})}</b></span>
+        <span style="color:${allSettled?'var(--green-dark)':'var(--danger)'}; font-weight:700">${allSettled?'ลงตัวพอดี':'มีค้างจ่าย'}</span>
+      </div>
+    </div>`;
+
+  document.getElementById('expenseList').innerHTML = list.map(e => {
+    const perPerson = e.amount / e.responsible.length;
+    const splitRows = e.responsible.map(mid => {
+      const status = (e.payments && e.payments[mid]) || 'pending';
+      const canToggle = mid === currentUser;
+      return `<div class="split-row">
+        <span>${memberName(mid)}${mid===e.paidBy?' (ผู้จ่าย)':''}: ฿${perPerson.toLocaleString(undefined,{maximumFractionDigits:0})}</span>
+        ${canToggle ? `<button class="badge ${status==='paid'?'green-bg':'pink-bg'}" onclick="toggleExpensePayment(${e.id},'${mid}')">${status==='paid'?'จ่ายแล้ว ✓':'รอยืนยัน ⏳'}</button>`
+                    : `<span class="badge ${status==='paid'?'green-bg':''}">${status==='paid'?'จ่ายแล้ว ✓':'รอยืนยัน ⏳'}</span>`}
+      </div>`;
+    }).join('');
+    const canEdit = (e.createdBy || e.paidBy) === currentUser;
+    return `<div class="card">
+      <div class="row">
+        <div class="icon green">${e.category}</div>
+        <div class="grow"><b class="bold">${e.title}</b><div class="muted">จ่ายโดย: ${memberName(e.paidBy)} · ${e.date}</div></div>
+        <div style="text-align:right"><b style="font-size:15px">฿ ${e.amount.toLocaleString()}</b><div style="font-size:10px; color:var(--muted)">${e.responsible.length>1?e.responsible.length+' คนหารเท่ากัน':'ส่วนตัว'}</div></div>
+        ${canEdit ? `<div class="row-actions" style="margin-left:6px">
+          <button class="icon-btn" onclick="openEditExpenseModal(${e.id})">✏️</button>
+          <button class="icon-btn" onclick="deleteExpense(${e.id})">🗑️</button>
+        </div>` : ''}
+      </div>
+      ${e.responsible.length>1 ? `<div class="expense-split">${splitRows}</div>` : ''}
+    </div>`;
+  }).join('') || `<div class="empty-hint">ยังไม่มีรายการค่าใช้จ่าย${isGroup?'กลุ่ม':'ส่วนตัว'}</div>`;
+}
+
+function toggleExpensePayment(expId, memberId){
+  const e = d().expenses.find(e=>e.id===expId);
+  if(!e) return;
+  e.payments[memberId] = e.payments[memberId]==='paid' ? 'pending' : 'paid';
+  renderExpense(document.getElementById('expPrivTab').classList.contains('active') ? 'private' : 'group');
+  renderHome();
+  toast(e.payments[memberId]==='paid' ? 'คุณยืนยันการจ่ายเงินแล้ว! 💸' : 'เปลี่ยนสถานะเป็น: รอยืนยัน');
+}
+
+function openAddExpenseModal(){
+  selectedExpResponsible = [currentUser];
+  document.getElementById('expPaidByInput').innerHTML = memberOptionsHtml(currentUser);
+  document.getElementById('expResponsiblePick').innerHTML = g().members.map(m =>
+    `<button type="button" class="chip ${m.id===currentUser?'active':''}" onclick="toggleChip(this, 'exp', '${m.id}')">${m.emoji} ${m.name}</button>`).join('');
+  openModal('addExpenseModal');
+}
+
+function submitExpense(){
+  const amount = parseFloat(document.getElementById('expAmountInput').value);
+  const title = document.getElementById('expTitleInput').value.trim();
+  if(!amount || !title){ toast('กรุณากรอกจำนวนเงินและรายละเอียด'); return; }
+  const responsible = selectedExpResponsible.length ? [...selectedExpResponsible] : [currentUser];
+  const payments = {};
+  const paidBy = document.getElementById('expPaidByInput').value;
+  responsible.forEach(id => payments[id] = id===paidBy ? 'paid' : 'pending');
+  d().expenses.unshift({ id: nextId++, title, amount, category:'💰', paidBy, createdBy: currentUser, responsible, date: TODAY, privacy: document.getElementById('expPrivacyInput').value, payments });
+  document.getElementById('expAmountInput').value=''; document.getElementById('expTitleInput').value='';
+  closeModal('addExpenseModal');
+  renderExpense(document.getElementById('expPrivTab').classList.contains('active') ? 'private' : 'group');
+  renderHome();
+  toast('บันทึกค่าใช้จ่ายและคำนวณส่วนหารแล้ว 💰');
+}
+
+let editingExpId = null;
+let editingExpResponsible = [];
+function openEditExpenseModal(id){
+  const e = d().expenses.find(e=>e.id===id);
+  if(!e) return;
+  editingExpId = id;
+  editingExpResponsible = [...e.responsible];
+  document.getElementById('editExpAmountInput').value = e.amount;
+  document.getElementById('editExpTitleInput').value = e.title;
+  document.getElementById('editExpPaidByInput').innerHTML = memberOptionsHtml(e.paidBy);
+  document.getElementById('editExpResponsiblePick').innerHTML = g().members.map(m =>
+    `<button type="button" class="chip ${editingExpResponsible.includes(m.id)?'active':''}" onclick="toggleEditExpChip(this,'${m.id}')">${m.emoji} ${m.name}</button>`).join('');
+  document.getElementById('editExpPrivacyInput').value = e.privacy;
+  openModal('editExpenseModal');
+}
+
+function toggleEditExpChip(btn, id){
+  btn.classList.toggle('active');
+  const idx = editingExpResponsible.indexOf(id);
+  if (idx>=0) editingExpResponsible.splice(idx,1); else editingExpResponsible.push(id);
+}
+
+function submitEditExpense(){
+  const e = d().expenses.find(e=>e.id===editingExpId);
+  if(!e) return;
+  const amount = parseFloat(document.getElementById('editExpAmountInput').value);
+  const title = document.getElementById('editExpTitleInput').value.trim();
+  if(!amount || !title){ toast('กรุณากรอกจำนวนเงินและรายละเอียด'); return; }
+  const responsible = editingExpResponsible.length ? [...editingExpResponsible] : [currentUser];
+  const paidBy = document.getElementById('editExpPaidByInput').value;
+  const payments = {};
+  responsible.forEach(id => payments[id] = (e.payments && e.payments[id]) || (id===paidBy ? 'paid' : 'pending'));
+  e.amount = amount; e.title = title; e.paidBy = paidBy; e.responsible = responsible; e.payments = payments;
+  e.privacy = document.getElementById('editExpPrivacyInput').value;
+  closeModal('editExpenseModal');
+  renderExpense(document.getElementById('expPrivTab').classList.contains('active') ? 'private' : 'group');
+  renderHome();
+  toast('บันทึกการแก้ไขค่าใช้จ่ายแล้ว');
+}
+
+function deleteExpense(id){
+  const e = d().expenses.find(e=>e.id===id);
+  if(!e) return;
+  askConfirm(`ยืนยันลบรายการ "${e.title}" ?`, function(){
+    d().expenses = d().expenses.filter(x=>x.id!==id);
+    renderExpense(document.getElementById('expPrivTab').classList.contains('active') ? 'private' : 'group');
+    renderHome();
+    toast('ลบรายการค่าใช้จ่ายแล้ว');
+  });
+}
+
+/* ================= SHOPPING ================= */
+function renderShoppingCats(){
+  const cats = d().shopCategories;
+  document.getElementById('shopCatFilter').innerHTML = `<button class="cat-pill active" onclick="filterCat(this,'all')">ทั้งหมด</button>` +
+    cats.map(c => `<button class="cat-pill" onclick="filterCat(this,'${c}')">${catIcons[c]||'🏷️'} ${catLabels[c]||c}</button>`).join('');
+}
+
+let activeShopFilter = 'all';
+function filterCat(btn, category){
+  activeShopFilter = category;
+  document.querySelectorAll('#shopCatFilter .cat-pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  renderShopping();
+}
+
+function renderShopping(){
+  const items = activeShopFilter==='all' ? d().shopping : d().shopping.filter(s=>s.category===activeShopFilter);
+  const pending = items.filter(s=>!s.bought), done = items.filter(s=>s.bought);
+  document.getElementById('shopPendingCount').textContent = `(${pending.length} รายการ)`;
+  document.getElementById('shopPendingList').innerHTML = pending.map(s => `
+    <div class="card"><div class="todo"><button class="check" onclick="toggleShopItem(${s.id})"></button>
+      <div class="grow"><b class="title bold">${s.name}</b><div class="muted">หมวด: ${catLabels[s.category]||s.category} · ซื้อโดย: ${s.buyer?memberName(s.buyer):'ใครก็ได้'}</div></div>
+      <span class="badge ${s.buyer?'pink-bg':''}">${catIcons[s.category]||'🏷️'}</span>
+      <div class="row-actions">
+        <button class="icon-btn" onclick="openEditShoppingModal(${s.id})">✏️</button>
+        <button class="icon-btn" onclick="deleteShoppingItem(${s.id})">🗑️</button>
+      </div>
+    </div></div>`).join('') || `<div class="empty-hint">ไม่มีของที่ต้องซื้อในหมวดนี้</div>`;
+  document.getElementById('shopDoneList').innerHTML = done.map(s => `
+    <div class="card done"><div class="todo"><button class="check" onclick="toggleShopItem(${s.id})">✓</button><div class="grow"><b class="title bold">${s.name}</b><div class="muted">ซื้อแล้ว · แตะติ๊กเพื่อยกเลิก</div></div>
+    <div class="row-actions"><button class="icon-btn" onclick="deleteShoppingItem(${s.id})">🗑️</button></div></div></div>`).join('') || `<div class="empty-hint">ยังไม่มีของที่ซื้อแล้ว</div>`;
+}
+
+function toggleShopItem(id){
+  const s = d().shopping.find(s=>s.id===id);
+  if(!s) return;
+  s.bought = !s.bought;
+  renderShopping(); renderHome();
+  toast(s.bought ? 'ทำรายการเสร็จแล้ว 🎉' : 'กดติ๊กออกแล้ว กลับไปช่องเดิม');
+}
+
+let editingShopId = null;
+function openEditShoppingModal(id){
+  const s = d().shopping.find(s=>s.id===id);
+  if(!s) return;
+  editingShopId = id;
+  document.getElementById('editShopNameInput').value = s.name;
+  document.getElementById('editShopCatInput').innerHTML = d().shopCategories.map(c=>`<option value="${c}" ${c===s.category?'selected':''}>${catIcons[c]||'🏷️'} ${catLabels[c]||c}</option>`).join('');
+  document.getElementById('editShopBuyerInput').innerHTML = `<option value="">ใครก็ได้</option>` + memberOptionsHtml(s.buyer);
+  openModal('editShoppingModal');
+}
+
+function submitEditShopping(){
+  const s = d().shopping.find(s=>s.id===editingShopId);
+  if(!s) return;
+  const name = document.getElementById('editShopNameInput').value.trim();
+  if(!name){ toast('กรุณาระบุชื่อสิ่งของ'); return; }
+  s.name = name;
+  s.category = document.getElementById('editShopCatInput').value;
+  s.buyer = document.getElementById('editShopBuyerInput').value || null;
+  closeModal('editShoppingModal');
+  renderShopping(); renderHome();
+  toast('บันทึกการแก้ไขรายการซื้อของแล้ว');
+}
+
+function deleteShoppingItem(id){
+  const s = d().shopping.find(s=>s.id===id);
+  if(!s) return;
+  askConfirm(`ยืนยันลบรายการ "${s.name}" ?`, function(){
+    d().shopping = d().shopping.filter(x=>x.id!==id);
+    renderShopping(); renderHome();
+    toast('ลบรายการซื้อของแล้ว');
+  });
+}
+
+function openAddShoppingModal(){
+  document.getElementById('shopCatInput').innerHTML = d().shopCategories.map(c=>`<option value="${c}">${catIcons[c]||'🏷️'} ${catLabels[c]||c}</option>`).join('');
+  document.getElementById('shopBuyerInput').innerHTML = `<option value="">ใครก็ได้</option>` + memberOptionsHtml(null);
+  document.getElementById('shopNewCatInput').value='';
+  openModal('addShoppingModal');
+}
+
+function addNewShopCategory(){
+  const val = document.getElementById('shopNewCatInput').value.trim();
+  if(!val) return;
+  const key = val.toLowerCase().replace(/\s+/g,'_');
+  if(!d().shopCategories.includes(key)){ d().shopCategories.push(key); catLabels[key]=val; catIcons[key]='🏷️'; }
+  document.getElementById('shopCatInput').innerHTML = d().shopCategories.map(c=>`<option value="${c}">${catIcons[c]||'🏷️'} ${catLabels[c]||c}</option>`).join('');
+  document.getElementById('shopCatInput').value = key;
+  document.getElementById('shopNewCatInput').value='';
+  renderShoppingCats();
+  toast('เพิ่มหมวดหมู่ใหม่ "'+val+'" แล้ว');
+}
+
+function submitShopping(){
+  const name = document.getElementById('shopNameInput').value.trim();
+  if(!name){ toast('กรุณาระบุชื่อสิ่งของ'); return; }
+  d().shopping.push({ id: nextId++, name, category: document.getElementById('shopCatInput').value, buyer: document.getElementById('shopBuyerInput').value || null, bought:false });
+  document.getElementById('shopNameInput').value='';
+  closeModal('addShoppingModal');
+  renderShopping(); renderHome();
+  toast('เพิ่มรายการลง Shopping List แล้ว');
+}
+
+/* ================= MEMORIES ================= */
+function memoryImagesOf(m){
+  if (m.images && m.images.length) return m.images;
+  if (m.image) return [{ url: m.image, type: m.mediaType || 'image' }];
+  return [];
+}
+
+function renderMemories(){
+  const monthFilter = document.getElementById('memoryMonthFilter').value; // 'YYYY-MM' or ''
+  let list = [...d().memories];
+  if (monthFilter) list = list.filter(m => m.date.startsWith(monthFilter));
+  list.sort((a,b)=>b.date.localeCompare(a.date));
+  document.getElementById('memoryGrid').innerHTML = list.map(m => {
+    const imgs = memoryImagesOf(m);
+    const cover = imgs[0];
+    const thumb = cover
+      ? (cover.type==='video' ? `<video src="${cover.url}" muted></video>` : `<img src="${cover.url}" alt="">`)
+      : `<span>${m.emoji}</span>`;
+    const countBadge = imgs.length > 1 ? `<span class="memory-count-badge">🖼️ ${imgs.length}</span>` : '';
+    return `
+    <div class="memory-card">
+      <div class="memory-thumb" onclick="openViewMemoryModal(${m.id})">${thumb}${countBadge}</div>
+      <div class="memory-info">
+        <div class="memory-date">${m.date}</div>
+        <div class="memory-caption">${m.caption}</div>
+        <div class="row-actions" style="margin-top:8px; justify-content:flex-end">
+          <button class="icon-btn" onclick="openEditMemoryModal(${m.id})">✏️</button>
+          <button class="icon-btn" onclick="deleteMemory(${m.id})">🗑️</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('') || `<div class="empty-hint">${monthFilter ? 'ไม่มีความทรงจำในเดือนนี้' : 'ยังไม่มีความทรงจำในกลุ่มนี้'}</div>`;
+}
+
+function openViewMemoryModal(id){
+  const m = d().memories.find(m=>m.id===id);
+  if(!m) return;
+  const imgs = memoryImagesOf(m);
+  document.getElementById('viewMemoryCaption').textContent = m.caption;
+  document.getElementById('viewMemoryDate').textContent = m.date + (imgs.length>1 ? ` · ${imgs.length} รูป` : '');
+  document.getElementById('viewMemoryGrid').innerHTML = imgs.length
+    ? imgs.map(it => it.type==='video' ? `<video src="${it.url}" controls></video>` : `<img src="${it.url}" alt="">`).join('')
+    : `<div class="empty-hint" style="grid-column:1/-1; font-size:40px">${m.emoji||'📷'}</div>`;
+  openModal('viewMemoryModal');
+}
+
+function clearMemoryFilter(){
+  document.getElementById('memoryMonthFilter').value = '';
+  renderMemories();
+}
+
+function renderMemoryPreview(mode){
+  const arr = mode === 'add' ? pickedMemoryImages : editingMemoryImages;
+  const wrapId = mode === 'add' ? 'memoryPreviewWrap' : 'editMemoryPreviewWrap';
+  const countId = mode === 'add' ? 'memoryCountLabel' : 'editMemoryCountLabel';
+  document.getElementById(wrapId).innerHTML = arr.map((it, idx) => `
+    <div class="memory-preview-item">
+      ${it.type==='video' ? `<video src="${it.url}" muted></video>` : `<img src="${it.url}" alt="">`}
+      <button type="button" class="rm-btn" onclick="removeMemoryImage('${mode}', ${idx})">×</button>
+    </div>`).join('');
+  document.getElementById(countId).textContent = `(${arr.length}/${MAX_MEMORY_IMAGES})`;
+}
+
+function removeMemoryImage(mode, idx){
+  const arr = mode === 'add' ? pickedMemoryImages : editingMemoryImages;
+  arr.splice(idx, 1);
+  renderMemoryPreview(mode);
+}
+
+function pickMemoryEmoji(btn, emoji){
+  document.querySelectorAll('#memoryEmojiPick button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  pickedMemoryEmoji = emoji;
+}
+
+function pickEditMemoryEmoji(btn, emoji){
+  document.querySelectorAll('#editMemoryEmojiPick button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  editingMemoryEmoji = emoji;
+}
+
+function handleMemoryFile(input, mode){
+  const files = input.files ? Array.from(input.files) : [];
+  if(!files.length) return;
+  const arr = mode === 'add' ? pickedMemoryImages : editingMemoryImages;
+  const emojiPickId = mode === 'add' ? 'memoryEmojiPick' : 'editMemoryEmojiPick';
+  const remaining = MAX_MEMORY_IMAGES - arr.length;
+  if (remaining <= 0){ toast(`เพิ่มรูป/วิดีโอได้สูงสุด ${MAX_MEMORY_IMAGES} รายการต่อความทรงจำ`); input.value=''; return; }
+  const toRead = files.slice(0, remaining);
+  if (files.length > remaining) toast(`เพิ่มได้สูงสุด ${MAX_MEMORY_IMAGES} รายการ เลือกไว้ ${remaining} จาก ${files.length} ไฟล์`);
+  let loaded = 0;
+  toRead.forEach(file => {
+    const isVideo = file.type.startsWith('video/');
+    const reader = new FileReader();
+    reader.onload = function(e){
+      arr.push({ url: e.target.result, type: isVideo ? 'video' : 'image' });
+      loaded++;
+      renderMemoryPreview(mode);
+      document.querySelectorAll(`#${emojiPickId} button`).forEach(b=>b.classList.remove('active'));
+      if (loaded === toRead.length) toast(`เพิ่มรูป/วิดีโอแล้ว 📸 (${arr.length}/${MAX_MEMORY_IMAGES})`);
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+function openAddMemoryModal(){
+  pickedMemoryEmoji = '📷'; pickedMemoryImages = [];
+  document.querySelectorAll('#memoryEmojiPick button').forEach((b,i)=>b.classList.toggle('active', i===0));
+  renderMemoryPreview('add');
+  document.getElementById('memoryDateInput').value = TODAY;
+  document.getElementById('memoryCaptionInput').value = '';
+  document.getElementById('memoryCameraInput').value = '';
+  document.getElementById('memoryLibraryInput').value = '';
+  openModal('addMemoryModal');
+}
+
+function submitMemory(){
+  const caption = document.getElementById('memoryCaptionInput').value.trim();
+  if(!caption){ toast('กรุณาใส่คำอธิบาย'); return; }
+  d().memories.push({ id: nextId++, emoji: pickedMemoryEmoji, images: pickedMemoryImages.slice(), date: document.getElementById('memoryDateInput').value, caption });
+  document.getElementById('memoryCaptionInput').value='';
+  closeModal('addMemoryModal');
+  renderMemories(); renderHome();
+  toast('อัปโหลดความทรงจำใหม่เรียบร้อย 📸');
+}
+
+let editingMemoryId = null, editingMemoryEmoji = '📷', editingMemoryImages = [];
+function openEditMemoryModal(id){
+  const m = d().memories.find(m=>m.id===id);
+  if(!m) return;
+  editingMemoryId = id;
+  editingMemoryEmoji = m.emoji;
+  editingMemoryImages = memoryImagesOf(m).slice();
+  document.getElementById('editMemoryDateInput').value = m.date;
+  document.getElementById('editMemoryCaptionInput').value = m.caption;
+  document.getElementById('editMemoryCameraInput').value = '';
+  document.getElementById('editMemoryLibraryInput').value = '';
+  document.querySelectorAll('#editMemoryEmojiPick button').forEach(b => b.classList.toggle('active', b.textContent.trim()===m.emoji && !editingMemoryImages.length));
+  renderMemoryPreview('edit');
+  openModal('editMemoryModal');
+}
+
+function submitEditMemory(){
+  const m = d().memories.find(m=>m.id===editingMemoryId);
+  if(!m) return;
+  const caption = document.getElementById('editMemoryCaptionInput').value.trim();
+  if(!caption){ toast('กรุณาใส่คำอธิบาย'); return; }
+  m.caption = caption;
+  m.date = document.getElementById('editMemoryDateInput').value;
+  m.emoji = editingMemoryEmoji;
+  m.images = editingMemoryImages.slice();
+  delete m.image; delete m.mediaType;
+  closeModal('editMemoryModal');
+  renderMemories(); renderHome();
+  toast('บันทึกการแก้ไขความทรงจำแล้ว');
+}
+
+function deleteMemory(id){
+  const m = d().memories.find(m=>m.id===id);
+  if(!m) return;
+  askConfirm(`ยืนยันลบความทรงจำ "${m.caption}" ?`, function(){
+    d().memories = d().memories.filter(x=>x.id!==id);
+    renderMemories(); renderHome();
+    toast('ลบความทรงจำแล้ว');
+  });
+}
+
+/* ================= MOOD ================= */
+function selectMood(el, emoji){
+  document.querySelectorAll('#moodPickGrid .mood').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMoodEmoji = emoji;
+}
+
+function submitMood(){
+  if(!selectedMoodEmoji){ toast('กรุณาเลือก Mood ก่อน'); return; }
+  if(!d().moods[TODAY]) d().moods[TODAY] = {};
+  d().moods[TODAY][currentUser] = { emoji: selectedMoodEmoji, privacy: document.getElementById('moodPrivacy').value, note: document.getElementById('moodNoteInput').value };
+  closeModal('moodModal');
+  document.getElementById('moodNoteInput').value='';
+  renderHome();
+  if (document.getElementById('moodcal').classList.contains('active')) renderMoodCalendar();
+  toast('บันทึก Mood ประจำวันสำเร็จ 💗');
+}
+
+function changeMoodMonth(delta){
+  moodMonth += delta;
+  if (moodMonth<1){ moodMonth=12; moodYear--; }
+  if (moodMonth>12){ moodMonth=1; moodYear++; }
+  renderMoodCalendar();
+}
+
+function renderMoodCalendar(){
+  document.getElementById('moodMonthLabel').textContent = `${thMonths[moodMonth]} ${moodYear}`;
+  const grid = document.getElementById('moodGrid');
+  const firstDow = new Date(moodYear, moodMonth-1, 1).getDay();
+  const daysInMonth = new Date(moodYear, moodMonth, 0).getDate();
+  let html = '';
+  for (let i=0;i<firstDow;i++) html += `<div class="cal-cell blank"></div>`;
+  for (let day=1; day<=daysInMonth; day++){
+    const dateStr = `${moodYear}-${pad(moodMonth)}-${pad(day)}`;
+    const isToday = dateStr === TODAY;
+    const moodsForDay = d().moods[dateStr];
+    let emojiShown = '';
+    if (moodsForDay){ const first = Object.values(moodsForDay)[0]; emojiShown = first ? first.emoji : ''; }
+    html += `<button class="cal-cell ${isToday?'today':''}" onclick="selectMoodDay('${dateStr}')">${day}${emojiShown?`<span class="mood-dot">${emojiShown}</span>`:''}</button>`;
+  }
+  grid.innerHTML = html;
+  document.getElementById('moodDayDetail').innerHTML = '';
+}
+
+function selectMoodDay(dateStr){
+  const moods = d().moods[dateStr];
+  const detail = document.getElementById('moodDayDetail');
+  if (!moods || !Object.keys(moods).length){ detail.innerHTML = `<div class="empty-hint">ไม่มีข้อมูล Mood ในวันที่ ${dateStr}</div>`; return; }
+  detail.innerHTML = `<div class="card">` + Object.entries(moods).map(([id,mv]) => `
+    <div class="row" style="margin-bottom:8px">
+      <div class="icon pink" style="font-size:22px">${mv.emoji}</div>
+      <div class="grow"><b class="bold">${memberName(id)}</b>${mv.note?`<div class="muted">${mv.note}</div>`:''}</div>
+      <span class="badge">${mv.privacy==='private'?'🔒':'👥'}</span>
+    </div>`).join('') + `</div>`;
+}
+
+/* ================= WISHLIST ================= */
+function showWishlistPage(){
+  wishTab = 'todo';
+  document.querySelectorAll('#wishTabs .sub-tab').forEach((b,i)=>b.classList.toggle('active', i===0));
+  renderWishlist();
+  showPage('wishlistPage');
+}
+
+function openAddWishlistModal(){
+  document.getElementById('wishModalTitle').textContent = 'เพิ่มรายการ Wishlist ✨';
+  openModal('addWishlistModal');
+}
+
+function switchWishTab(btn, cat){
+  wishTab = cat;
+  document.querySelectorAll('#wishTabs .sub-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWishlist();
+}
+
+const wishStatusLabel = { want:'อยากทำ', doing:'กำลังทำ', done:'เสร็จสิ้น' };
+function renderWishlist(){
+  const items = d().wishlist.filter(w=>w.cat===wishTab);
+  document.getElementById('wishList').innerHTML = items.map(w => `
+    <div class="card">
+      <div class="row">
+        <div class="grow">
+          <b class="bold">${w.title}</b>
+          <div class="muted">${[w.date, w.time, w.place].filter(Boolean).join(' · ') || 'ยังไม่ระบุวันที่/สถานที่'}</div>
+        </div>
+        <button class="badge pink-bg" onclick="cycleWishStatus(${w.id})">${wishStatusLabel[w.status]}</button>
+      </div>
+      ${w.link ? `<div class="muted" style="margin-top:6px; font-size:11px">🔗 ${w.link}</div>` : ''}
+      ${w.details ? `<div class="muted" style="margin-top:4px; font-size:12px">${w.details}</div>` : ''}
+      <div class="row-actions" style="margin-top:10px; justify-content:flex-end">
+        <button class="icon-btn" onclick="openEditWishlistModal(${w.id})">✏️</button>
+        <button class="icon-btn" onclick="deleteWishlistItem(${w.id})">🗑️</button>
+      </div>
+    </div>`).join('') || `<div class="empty-hint">ยังไม่มีรายการในหมวดนี้</div>`;
+}
+
+function cycleWishStatus(id){
+  const order = ['want','doing','done'];
+  const w = d().wishlist.find(w=>w.id===id);
+  w.status = order[(order.indexOf(w.status)+1) % order.length];
+  renderWishlist();
+  toast('อัปเดตสถานะเป็น: ' + wishStatusLabel[w.status]);
+}
+
+let editingWishlistId = null;
+function openEditWishlistModal(id){
+  const w = d().wishlist.find(w=>w.id===id);
+  if(!w) return;
+  editingWishlistId = id;
+  document.getElementById('editWishTitleInput').value = w.title;
+  document.getElementById('editWishDateInput').value = w.date || '';
+  document.getElementById('editWishTimeInput').value = w.time || '';
+  document.getElementById('editWishPlaceInput').value = w.place || '';
+  document.getElementById('editWishLinkInput').value = w.link || '';
+  document.getElementById('editWishDetailsInput').value = w.details || '';
+  document.getElementById('editWishStatusInput').value = w.status;
+  openModal('editWishlistModal');
+}
+
+function submitEditWishlist(){
+  const w = d().wishlist.find(w=>w.id===editingWishlistId);
+  if(!w) return;
+  const title = document.getElementById('editWishTitleInput').value.trim();
+  if(!title){ toast('กรุณาระบุชื่อรายการ'); return; }
+  w.title = title;
+  w.date = document.getElementById('editWishDateInput').value;
+  w.time = document.getElementById('editWishTimeInput').value;
+  w.place = document.getElementById('editWishPlaceInput').value.trim();
+  w.link = document.getElementById('editWishLinkInput').value.trim();
+  w.details = document.getElementById('editWishDetailsInput').value.trim();
+  w.status = document.getElementById('editWishStatusInput').value;
+  closeModal('editWishlistModal');
+  renderWishlist(); renderHome();
+  toast('บันทึกการแก้ไข Wishlist แล้ว');
+}
+
+function deleteWishlistItem(id){
+  const w = d().wishlist.find(w=>w.id===id);
+  if(!w) return;
+  askConfirm(`ยืนยันลบ "${w.title}" ?`, function(){
+    d().wishlist = d().wishlist.filter(x=>x.id!==id);
+    renderWishlist(); renderHome();
+    toast('ลบรายการ Wishlist แล้ว');
+  });
+}
+
+function submitWishlist(){
+  const title = document.getElementById('wishTitleInput').value.trim();
+  if(!title){ toast('กรุณาระบุชื่อรายการ'); return; }
+  d().wishlist.push({
+    id: nextId++, cat: wishTab, title,
+    date: document.getElementById('wishDateInput').value,
+    time: document.getElementById('wishTimeInput').value,
+    place: document.getElementById('wishPlaceInput').value.trim(),
+    link: document.getElementById('wishLinkInput').value.trim(),
+    details: document.getElementById('wishDetailsInput').value.trim(),
+    status: document.getElementById('wishStatusInput').value
+  });
+  ['wishTitleInput','wishDateInput','wishTimeInput','wishPlaceInput','wishLinkInput','wishDetailsInput'].forEach(id=>document.getElementById(id).value='');
+  closeModal('addWishlistModal');
+  renderWishlist();
+  renderHome();
+  toast('เพิ่ม Item เข้า Wishlist แล้ว ✨');
+}
+
+/* ================= AWARD ================= */
+function showAwardPage(){ renderAward(); showPage('awardPage'); }
+
+function renderAward(){
+  const aw = d().awards;
+  document.getElementById('awardTotalScore').textContent = aw.score + ' คะแนน';
+  document.getElementById('myAwardScore').textContent = 'คะแนนของฉัน: ' + (aw.perMember[currentUser]||0);
+  const ranked = g().members.map(m => ({...m, score: aw.perMember[m.id]||0})).sort((a,b)=>b.score-a.score);
+  document.getElementById('awardLeaderboard').innerHTML = ranked.map((m,i) => `
+    <div class="leader-row"><span><span class="rank">${i+1}</span>${m.emoji} ${m.name}</span><b>${m.score} คะแนน</b></div>`).join('');
+  document.getElementById('awardRewards').innerHTML = (aw.rewards.length ? aw.rewards : []).map(r => `
+    <button class="option-btn" onclick="openRedeemModal('${r.replace(/'/g,"")}')">🎁 ${r}</button>`).join('') || `<div class="empty-hint">ยังไม่มี Reward ที่ตั้งไว้</div>`;
+  document.getElementById('awardHistory').innerHTML = aw.history.slice().reverse().map(h => `
+    <div class="card"><div class="row"><div class="icon yellow">🏅</div><div class="grow"><b class="bold">${memberName(h.who)} · ${h.what}</b><div class="muted">${h.date}</div></div><span class="badge ${h.points<0?'danger-bg':'green-bg'}">${h.points>=0?'+':''}${h.points}</span></div></div>`).join('') || `<div class="empty-hint">ยังไม่มีประวัติคะแนน</div>`;
+}
+
+function doAward(what, points){
+  const aw = d().awards;
+  aw.score += points;
+  aw.perMember[currentUser] = (aw.perMember[currentUser]||0) + points;
+  aw.history.push({ who: currentUser, what, points, date: TODAY });
+  renderAward();
+  toast(`รับ +${points} คะแนน ${what.split(' ').slice(1).join(' ')} แล้ว 🎉`);
+}
+
+/* ---- ask for confirmation before actually crediting the points ---- */
+function confirmAward(what, points){
+  askConfirm(`ยืนยันรับ +${points} คะแนน จาก "${what}" หรือไม่?`, function(){
+    doAward(what, points);
+  }, { title:'ยืนยันรับแต้ม', icon:'🏅', confirmLabel:'ยืนยันรับแต้ม' });
+}
+
+function submitCustomAward(){
+  const name = document.getElementById('customAwardName').value.trim();
+  const points = parseInt(document.getElementById('customAwardPoints').value);
+  if(!name || !points){ toast('กรุณากรอกชื่อภารกิจและคะแนน'); return; }
+  confirmAward(name, points);
+  document.getElementById('customAwardName').value='';
+  document.getElementById('customAwardPoints').value='';
+}
+
+/* ---- redeem reward: choose points then confirm ---- */
+let redeemingRewardName = null;
+function openRedeemModal(name){
+  const aw = d().awards;
+  const avail = aw.perMember[currentUser] || 0;
+  redeemingRewardName = name;
+  document.getElementById('redeemRewardName').textContent = '🎁 ' + name;
+  document.getElementById('redeemAvailText').textContent = `คุณมี ${avail} คะแนน`;
+  const range = document.getElementById('redeemPointsRange');
+  range.max = avail;
+  range.value = 0;
+  document.getElementById('redeemPointsInput').max = avail;
+  document.getElementById('redeemPointsInput').value = 0;
+  document.getElementById('redeemPointsVal').textContent = '0';
+  if (avail <= 0) toast('คุณยังไม่มีคะแนนสะสมให้ใช้แลก');
+  openModal('redeemModal');
+}
+
+function syncRedeemPoints(val){
+  const aw = d().awards;
+  const avail = aw.perMember[currentUser] || 0;
+  let v = Math.max(0, Math.min(avail, parseInt(val)||0));
+  document.getElementById('redeemPointsRange').value = v;
+  document.getElementById('redeemPointsInput').value = v;
+  document.getElementById('redeemPointsVal').textContent = v;
+}
+
+function confirmRedeem(){
+  const aw = d().awards;
+  const avail = aw.perMember[currentUser] || 0;
+  const points = parseInt(document.getElementById('redeemPointsInput').value) || 0;
+  if (points <= 0){ toast('กรุณาเลือกจำนวนคะแนนที่จะใช้แลก'); return; }
+  if (points > avail){ toast('คุณมีคะแนนไม่พอ'); return; }
+  const name = redeemingRewardName;
+  askConfirm(`ยืนยันใช้ ${points} คะแนน แลก "${name}" ใช่หรือไม่?`, function(){
+    aw.perMember[currentUser] = avail - points;
+    aw.score = Math.max(0, aw.score - points);
+    aw.history.push({ who: currentUser, what: '🎁 แลกรางวัล: ' + name, points: -points, date: TODAY });
+    closeModal('redeemModal');
+    renderAward();
+    toast('แลกรางวัล "' + name + '" ด้วย ' + points + ' คะแนนแล้ว 🎁');
+  }, { title:'ยืนยันแลกแต้ม', icon:'🎁', confirmLabel:'ยืนยันแลก' });
+}
+
+/* ================= ANNOUNCEMENT ================= */
+function submitAnnouncement(){
+  const title = document.getElementById('annTitleInput').value.trim();
+  if(!title){ toast('กรุณาใส่หัวข้อประกาศ'); return; }
+  d().announcements.unshift({ id: nextId++, title, details: document.getElementById('annDetailsInput').value.trim(), time: 'เมื่อสักครู่', pinned: true });
+  document.getElementById('annTitleInput').value=''; document.getElementById('annDetailsInput').value='';
+  closeModal('announcementModal');
+  renderHome();
+  toast('ส่งประกาศสำคัญให้ทุกคนในกลุ่มแล้ว 📢');
+}
+
+/* ================= IMPORTANT DATES ================= */
+function renderSettingImportantDates(){
+  const list = d().importantDates;
+  const icon = t => t==='birthday' ? '🎂' : t==='anniversary' ? '💍' : '📌';
+  document.getElementById('importantDatesList').innerHTML = `<div class="card">` + (list.length ? list.map((i,idx) => `
+    <div class="row" style="${idx>0?'margin-top:10px':''}">
+      <div class="icon pink">${icon(i.type)}</div>
+      <div class="grow"><b class="bold">${i.name}</b><div class="muted">${i.date} · แจ้งเตือนล่วงหน้า ${i.reminder} วัน</div></div>
+      <button class="icon-btn" onclick="deleteImportantDate(${i.id})">🗑️</button>
+    </div>`).join('') : `<div class="empty-hint">ยังไม่มีวันสำคัญ</div>`) + `</div>`;
+}
+
+function deleteImportantDate(id){
+  const i = d().importantDates.find(i=>i.id===id);
+  askConfirm(`ยืนยันลบ "${i?i.name:''}" ?`, function(){
+    d().importantDates = d().importantDates.filter(i=>i.id!==id);
+    renderSettingImportantDates(); renderHome();
+    renderCalendarGrid(); renderCalendarEvents();
+    if (calSelectedDate) selectCalDay(calSelectedDate);
+    toast('ลบวันสำคัญแล้ว');
+  });
+}
+
+function submitImportantDate(){
+  const name = document.getElementById('impNameInput').value.trim();
+  if(!name){ toast('กรุณาระบุชื่อวันสำคัญ'); return; }
+  d().importantDates.push({ id: nextId++, name, type: document.getElementById('impTypeInput').value, date: document.getElementById('impDateInput').value, reminder: +document.getElementById('impReminderInput').value });
+  document.getElementById('impNameInput').value='';
+  closeModal('addImportantDateModal');
+  renderSettingImportantDates(); renderHome();
+  renderCalendarGrid(); renderCalendarEvents();
+  if (calSelectedDate) selectCalDay(calSelectedDate);
+  toast('บันทึกวันสำคัญเรียบร้อย');
+}
+
+/* ================= GROUP MANAGEMENT / MEMBERS ================= */
+function renderMembers(){
+  const grp = g();
+  document.getElementById('memberCountLabel').textContent = `สมาชิกในกลุ่ม (${grp.members.length}/10 คน)`;
+  document.getElementById('memberList').innerHTML = grp.members.map(m => `
+    <div class="row" style="margin-top:8px">
+      <div class="avatar">${m.emoji}</div>
+      <div class="grow"><b>${m.name}${m.id===currentUser?' (คุณ)':''}</b> <small class="muted">· ${m.role}</small></div>
+    </div>`).join('');
+}
+
+/* ---- real invite link / QR code ---- */
+function inviteLinkFor(grp){
+  return `https://our.app/join/${grp.invite}`;
+}
+
+function copyInviteLink(){
+  const link = inviteLinkFor(g());
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(link).then(
+      ()=> toast('คัดลอก Invite Link แล้ว 📋'),
+      ()=> fallbackCopy(link)
+    );
+  } else {
+    fallbackCopy(link);
+  }
+}
+
+function fallbackCopy(text){
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); toast('คัดลอก Invite Link แล้ว 📋'); }
+  catch(e){ toast('คัดลอกไม่สำเร็จ ลองแตะค้างที่ลิงก์เพื่อคัดลอกเอง'); }
+  document.body.removeChild(ta);
+}
+
+/* ---- generate a QR code SVG entirely client-side (no network call needed) ---- */
+function generateQrSvg(text){
+  for (let type = 2; type <= 24; type++){
+    try {
+      const qr = qrcode(type, 'M');
+      qr.addData(text);
+      qr.make();
+      return qr.createSvgTag(5, 10);
+    } catch(e){ /* data too big for this type, try the next size up */ }
+  }
+  return null;
+}
+
+function showInviteQr(){
+  const grp = g();
+  const link = inviteLinkFor(grp);
+  const box = document.getElementById('inviteQrBox');
+  const img = document.getElementById('inviteQrImg');
+  const linkText = document.getElementById('inviteQrLink');
+  const isShown = box.style.display !== 'none';
+  if (isShown){ box.style.display = 'none'; return; }
+  const svg = generateQrSvg(link);
+  img.innerHTML = svg || '<div class="empty-hint">ไม่สามารถสร้าง QR Code ได้</div>';
+  linkText.textContent = link;
+  box.style.display = 'flex';
+}
+
+/* ---- notifications toggle (clear on/off state) ---- */
+function toggleNotifications(){
+  notificationsOn = !notificationsOn;
+  const sw = document.getElementById('notifSwitch');
+  const stateText = document.getElementById('notifStateText');
+  sw.classList.toggle('on', notificationsOn);
+  stateText.textContent = notificationsOn ? 'เปิดอยู่' : 'ปิดอยู่';
+  stateText.classList.toggle('on', notificationsOn);
+  stateText.classList.toggle('off', !notificationsOn);
+  toast(notificationsOn ? '🔔 เปิดการแจ้งเตือนแล้ว' : '🔕 ปิดการแจ้งเตือนแล้ว');
+}
+
+function handleLeaveGroup(){
+  const grp = g();
+  if (grp.owner === currentUser){ toast('คุณเป็น Owner ต้องโอนความเป็นเจ้าของก่อนจึงจะออกจากกลุ่มได้'); return; }
+  askConfirm(`ยืนยันออกจากกลุ่ม "${grp.name}" ?`, function(){
+    toast('ออกจากกลุ่ม "' + grp.name + '" แล้ว (mock)');
+  }, { title:'ออกจากกลุ่ม', icon:'🚪', confirmLabel:'ยืนยันออกจากกลุ่ม' });
+}
+
+function handleTransferOwner(){
+  const grp = g();
+  if (grp.owner !== currentUser){ toast('เฉพาะ Owner เท่านั้นที่โอนความเป็นเจ้าของได้'); return; }
+  const others = grp.members.filter(m=>m.id!==currentUser);
+  if(!others.length){ toast('ไม่มีสมาชิกอื่นให้โอนสิทธิ์'); return; }
+  askConfirm(`โอนความเป็นเจ้าของกลุ่มให้ ${others[0].name} ?`, function(){
+    grp.owner = others[0].id;
+    const meIdx = grp.members.findIndex(m=>m.id===currentUser);
+    grp.members[meIdx].role = 'Member';
+    grp.members.find(m=>m.id===others[0].id).role = 'Owner';
+    renderMembers();
+    toast('โอนความเป็นเจ้าของให้ ' + others[0].name + ' แล้ว 👑');
+  }, { title:'โอนความเป็นเจ้าของ', icon:'👑', confirmLabel:'ยืนยันโอน' });
+}
+
+function handleDeleteGroup(){
+  const grp = g();
+  if (grp.owner !== currentUser){ toast('เฉพาะ Owner เท่านั้นที่ลบกลุ่มได้'); return; }
+  if (Object.keys(groups).length <= 1){ toast('ต้องมีอย่างน้อย 1 กลุ่มเสมอ'); return; }
+  askConfirm(`ยืนยันลบกลุ่ม "${grp.name}" ? การกระทำนี้ไม่สามารถย้อนกลับได้`, function(){
+    delete groups[currentGroup];
+    delete data[currentGroup];
+    currentGroup = Object.keys(groups)[0];
+    setGroup(currentGroup);
+    toast('ลบกลุ่มแล้ว');
+  }, { title:'ลบกลุ่ม', icon:'🗑️', confirmLabel:'ยืนยันลบกลุ่ม' });
+}
+
+/* ================= PROFILE ================= */
+function updateNickname(val){
+  const name = val.trim() || 'เพื่อน';
+  document.getElementById('greetingName').textContent = name;
+  document.getElementById('profileNameDisplay').textContent = name;
+}
+
+function updateUsernamePreview(val){
+  const uname = val.trim().replace(/\s+/g,'_') || 'our_mew';
+  document.getElementById('usernameDisplay').textContent = '@' + uname;
+}
+
+function saveProfile(){
+  const uname = document.getElementById('usernameInput').value.trim().replace(/\s+/g,'_');
+  if(!uname){ toast('กรุณาระบุ Username'); return; }
+  document.getElementById('usernameInput').value = uname;
+  document.getElementById('usernameDisplay').textContent = '@' + uname;
+  updateNickname(document.getElementById('nicknameInput').value);
+  toast('บันทึกข้อมูลโปรไฟล์เรียบร้อย!');
+}
+
+/* ---- profile photo: center-crop to 1:1, max 1080px ---- */
+function handleProfilePhoto(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ toast('กรุณาเลือกไฟล์รูปภาพเท่านั้น'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = new Image();
+    img.onload = function(){
+      const MAX = 1080;
+      const side = Math.min(img.width, img.height);
+      const sx = (img.width - side) / 2;
+      const sy = (img.height - side) / 2;
+      const outSize = Math.min(MAX, side);
+      const canvas = document.createElement('canvas');
+      canvas.width = outSize;
+      canvas.height = outSize;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, sx, sy, side, side, 0, 0, outSize, outSize);
+      profilePhotoDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+      document.getElementById('profileAvatarBox').innerHTML = `<img src="${profilePhotoDataUrl}" alt="รูปโปรไฟล์">`;
+      toast(`ตั้งรูปโปรไฟล์แล้ว (${outSize}×${outSize}px) ✅`);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+/* ================= MODAL HELPERS ================= */
+function openModal(id){ const m=document.getElementById(id); if(m) m.classList.add('show'); }
+function closeModal(id){ const m=document.getElementById(id); if(m) m.classList.remove('show'); }
+function closeModalOnBg(e, id){ if(e.target.classList.contains('modal')) closeModal(id); }
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ================= PWA: install to home screen ================= */
+let deferredInstallPrompt = null;
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+function refreshInstallCard(){
+  const card = document.getElementById('installCard');
+  const btn = document.getElementById('installBtn');
+  const sub = document.getElementById('installCardSub');
+  if (!card) return;
+  if (isStandalone){ card.style.display = 'none'; return; }
+  if (deferredInstallPrompt){
+    card.style.display = 'block';
+    btn.style.display = 'block';
+    sub.textContent = 'เพิ่มไอคอนไว้ที่หน้าจอหลัก ใช้งานได้เหมือนแอปจริง';
+  } else if (isIos){
+    card.style.display = 'block';
+    btn.style.display = 'none';
+    sub.textContent = 'กดปุ่มแชร์ (⬆️) ด้านล่างเบราว์เซอร์ แล้วเลือก "Add to Home Screen"';
+  } else {
+    card.style.display = 'none';
+  }
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  refreshInstallCard();
+});
+
+function triggerInstallPrompt(){
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then(() => {
+    deferredInstallPrompt = null;
+    refreshInstallCard();
+  });
+}
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  refreshInstallCard();
+  toast('ติดตั้งแอป OUR เรียบร้อย 📲💗');
+});
+
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+  });
+}
+
+/* ================= INIT ================= */
+renderAccountPick();
+applyUserIdentity();
+renderAll();
+refreshInstallCard();
+</script>
+</body>
+</html>
